@@ -28,36 +28,6 @@
         <img src="https://via.placeholder.com/400x300" alt="Temple" />
       </div>
     </section>
-
-    <!-- 區塊：集順廟歷史 -->
-    <section class="section">
-      <div class="section-header">
-        <img src="https://via.placeholder.com/50" alt="Icon" />
-        <h2>集順廟歷史</h2>
-      </div>
-      <div class="section-content">
-        <p>
-          集順廟建於1838年，是當地的信仰中心，也是居民的精神寄託。
-          此廟經歷多次修建，現今的廟宇結構在1989年進行了大規模翻新，並於該年開廟祭祀。
-        </p>
-        <img src="https://via.placeholder.com/400x300" alt="History" />
-      </div>
-    </section>
-
-    <!-- 區塊：供奉神祇 -->
-    <section class="section">
-      <div class="section-header">
-        <img src="https://via.placeholder.com/50" alt="Icon" />
-        <h2>供奉神祇</h2>
-      </div>
-      <div class="section-content">
-        <p>
-          集順廟供奉著主要神明保儀大夫與保儀尊王。
-          除此之外，廟中還有奉祀一些地方神明，如土地公、觀音等，並不定期舉辦重要祭典活動。
-        </p>
-        <img src="https://via.placeholder.com/400x300" alt="Gods" />
-      </div>
-    </section>
   </div>
 </template>
 
@@ -68,9 +38,10 @@ export default {
 </script>
 
 <style scoped>
-/* 頁面佈局樣式 */
+/* 整體佈局與樣式調整 */
 .introduction {
   padding: 2rem;
+  margin: 0 auto; /* 讓頁面在大螢幕上居中 */
 }
 
 /* 頁面導航區域 */
@@ -85,7 +56,7 @@ export default {
   background-color: #f2d349;
   border: none;
   padding: 10px 20px;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.5rem); /* 動態字體大小 */
   border-radius: 20px;
   cursor: pointer;
 }
@@ -101,22 +72,23 @@ export default {
   align-items: center;
   gap: 20px;
   position: relative; /* 允許使用 top 來移動 */
-  top: -95px; /* 向上移動 */
+  top: -5em; /* 向上移動，根據需求調整 */
 }
 
 .section {
-  margin: 6rem 0; /* 確保 section-header 不會覆蓋 section */
+  margin: 4rem auto; /* 確保 section-header 不會覆蓋 section */
   padding: 2rem;
   background-color: #e9e0c7;
   color: rgb(50, 49, 49);
   font-weight: 700;
   border-radius: 30px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* 增加陰影效果 */
+  max-width: 85%;
 }
-
 
 .section-header h2 {
   color: #d75b28;
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 3vw, 3rem); /* 動態字體大小 */
   font-weight: 700;
 }
 
@@ -124,7 +96,7 @@ export default {
 .section-area {
   display: flex;
   gap: 1.5rem;
-  margin-top: -6rem;
+  margin-top: -4rem;
 }
 
 .section-content {
@@ -134,24 +106,28 @@ export default {
 
 .section-content p {
   flex: 1;
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 1.5vw, 2rem); /* 動態字體大小 */
   line-height: 1.6;
 }
 
+/* 圖片自適應的調整 */
 .section-area img {
-  max-width: 400px;
+  width: 100%; /* 讓圖片寬度佔滿容器 */
+  height: auto; /* 自動調整高度，保持比例 */
   border-radius: 10px;
+  object-fit: cover; /* 確保圖片覆蓋並保持比例 */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* 響應式設計：針對小螢幕調整 */
-@media (max-width: 768px) {
+@media (max-width: 950px) {
   .section-content {
-    flex-direction: column;
+    flex-direction: column; /* 讓圖片和文字垂直排列 */
   }
 
   .section-content img {
-    max-width: 100%;
+    width: 50%; /* 圖片在小螢幕上佔滿容器寬度 */
+    margin-top: 1rem; /* 在圖片和文字之間添加一些間距 */
   }
 
   .tabs {
@@ -161,5 +137,20 @@ export default {
   .tab {
     margin-bottom: 10px;
   }
+
+  .section-header {
+    top: -30px; /* 調整小螢幕上的偏移 */
+  }
+
+  .section-area {
+    margin-top: -2rem;
+    flex-direction: column; /* 讓 section 內容垂直排列 */
+  }
+
+  .section {
+    width: 100%; /* 小螢幕時讓 section 佔滿整個螢幕 */
+    padding: 1.5rem;
+  }
 }
+
 </style>
