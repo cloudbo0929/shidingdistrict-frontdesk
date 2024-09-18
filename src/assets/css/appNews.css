@@ -1,0 +1,99 @@
+/* 整個畫廊容器 */
+.news-gallery {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* 標題區域 */
+  .news-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .news-header h2 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* 卡片容器 */
+  .news-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* 單個卡片，優化寬高比例及樣式 */
+  .news-card {
+    position: relative; /* 確保內部的絕對定位能夠生效 */
+    width: calc(50% - 20px); /* 每行兩個，減去 gap */
+    border: 1px solid #ccc;
+    border-radius: 12px; /* 調整圓角讓卡片更美觀 */
+    overflow: hidden;
+    background-color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加陰影讓卡片更加立體 */
+    transition: transform 0.3s ease; /* 滑鼠懸停時的縮放效果 */
+  }
+  
+  .news-card:hover {
+    transform: scale(1.05); /* 當滑鼠懸停時，卡片放大 */
+  }
+  
+  /* 圖片樣式 */
+  .news-image {
+    width: 100%;
+    height: 300px; /* 調整圖片的高度來達到更好比例 */
+    object-fit: cover; /* 保持圖片比例 */
+    transition: transform 0.3s ease;
+  }
+  
+  /* 標題和日期的容器 */
+  .news-info {
+    padding: 15px; /* 增加內部填充來讓卡片內容更有空間 */
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between; /* 讓標題和日期分布於左右兩端 */
+    align-items: center;
+  }
+  
+  /* 標題樣式 */
+  .news-title {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none; /* 移除標題下劃線 */
+    transition: color 0.3s ease;
+    text-align: left;
+  }
+
+  .news-title:hover {
+    color: #007bff; /* 懸停時變換顏色 */
+    text-decoration: underline; /* 懸停時顯示下劃線 */
+  }
+  
+  /* 日期樣式 */
+  .news-date {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 12px;
+    color: #666;
+  }
+  
+  /* RWD - 平板和手機上的調整 */
+  @media screen and (max-width: 768px) {
+    .news-card {
+      width: calc(100% - 40px); /* 每行顯示一個卡片，間距縮小 */
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .news-card {
+      width: calc(100% - 20px); /* 手機上每行一個卡片，進一步縮小間距 */
+    }
+  }
+  
