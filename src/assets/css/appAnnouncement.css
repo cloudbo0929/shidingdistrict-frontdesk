@@ -1,0 +1,81 @@
+/* 公告列表容器 */
+.news-announcement {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  /* 標題區域 */
+  .news-header {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .news-header h2 {
+    font-size: 20px;
+    color: #333;
+  }
+  
+  /* 公告列表 */
+  .news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .news-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed #ddd;
+  }
+  
+  /* 左邊的圖標 */
+  .news-icon {
+    color: #ffcc00;
+    margin-right: 10px;
+  }
+  
+ /* 公告標題超連結樣式 */
+.news-title {
+  font-size: 16px;
+  flex-grow: 1;
+  color: #333;
+  text-decoration: none; /* 移除超連結下劃線 */
+}
+
+.news-title:hover {
+  text-decoration: underline; /* 懸停時顯示下劃線 */
+  color: #007bff; /* 懸停時變換顏色 */
+}
+  
+  /* 公告日期樣式 */
+  .news-date {
+    font-size: 14px;
+    color: #999;
+  }
+  
+  /* 底部“更多”按鈕 */
+  .news-footer {
+    text-align: right;
+    margin-top: 30px;
+  }
+  
+  .more-button {
+    background-color: #ddd;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .more-button:hover {
+    background-color: #ccc;
+  }

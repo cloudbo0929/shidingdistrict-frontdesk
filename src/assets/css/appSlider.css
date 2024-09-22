@@ -1,0 +1,99 @@
+/* 滑入滑出效果 */
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.5s ease;
+}
+
+.slide-enter {
+  transform: translateX(100%); /* 幻燈片從右邊進入 */
+}
+
+.slide-leave-to {
+  transform: translateX(-100%); /* 幻燈片滑出到左邊 */
+}
+
+/* 幻燈片容器 */
+.slideshow-container {
+  position: relative;
+  max-width: 100%;
+  margin: auto;
+  overflow: hidden;
+}
+
+.slides {
+  text-align: center;
+}
+
+.slides img {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.caption {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #f2f2f2;
+  font-weight: bold;
+  word-wrap:break-word;
+  font-size: 32px;
+  text-shadow: 2px 2px 4px #0f0f0f; /* 調整文字陰影 */
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 50px;
+  left: 10%; /* 如果你希望標題靠左一些，移除 translateX(-50%) */
+  text-align: center;
+}
+
+/* 左右切換按鈕 */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  user-select: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* 圓點指示器 */
+.dots-container {
+  text-align: center;
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+}
+
+.dot {
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 0 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #ffffff;
+}
