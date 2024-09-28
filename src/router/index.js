@@ -3,6 +3,7 @@ import AppIntroduction from '@/views/AppIntroduction.vue';
 import AppHome from '@/views/AppHome.vue';
 import AllNews from '@/views/AllNews.vue';
 import NewsDetail from '@/views/NewsDetail.vue'; // 引入新的頁面組件
+import LuckDisplay from '@/views/LuckDisplay.vue';
 
 const routes = [
   {
@@ -35,9 +36,19 @@ const routes = [
   {
     path: '/news/:id',
     name: 'NewsDetail',
-    component: NewsDetail, // 使用 NewsDetail 組件
+    component: NewsDetail,
     meta: {
       title: '新聞詳情 - 石碇觀光發展協會',
+      image: '/images/mascot.png',
+    },
+  },  
+  {
+    path: '/luck/:templateName',
+    name: 'LuckDisplay',
+    component: LuckDisplay,
+    props: true, // 啟用 props 傳遞，可以接收 route.params
+    meta: {
+      title: '運勢詳細頁面 - 石碇觀光發展協會',
       image: '/images/mascot.png',
     },
   },
@@ -48,19 +59,15 @@ const router = createRouter({
   routes,
 });
 
-// 當路由變更時更新瀏覽器標題與 og:image
 router.beforeEach((to, from, next) => {
-  // 更新瀏覽器標題
   document.title = to.meta.title || '石碇觀光發展協會網站';
 
-  // 更新 og:image 的屬性
   let metaImage = document.querySelector('meta[property="og:image"]');
   if (!metaImage) {
     metaImage = document.createElement('meta');
     metaImage.setAttribute('property', 'og:image');
     document.head.appendChild(metaImage);
   }
-  // 確保 `to.meta.image` 為可訪問的圖片 URL，或使用 `public` 資料夾中的相對路徑
   metaImage.setAttribute('content', to.meta.image || '/images/default.jpg');
 
   next();

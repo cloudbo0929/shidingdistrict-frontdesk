@@ -110,8 +110,9 @@
   }
 
   .footer-image {
-    width: 100%;
-    margin: 20px 0;
+    width: 10%;
+    margin-right: 7vw;
+    padding: 0;
   }
 
   .footer-image img {
