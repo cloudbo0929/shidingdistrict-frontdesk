@@ -41,7 +41,7 @@ export default {
   name: "AppFooter",
   data() {
     return {
-      footerImage: require("@/assets/images/mascot.png"),
+      footerImage: require("@/assets/images/logo.jpg"),
     };
   },
 };
