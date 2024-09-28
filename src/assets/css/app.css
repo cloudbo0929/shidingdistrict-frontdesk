@@ -13,3 +13,16 @@ body{
   flex: 1;
   padding: 20px;
 }
+
+main, .main-content, .slider {
+  margin-top:80px; /* 根據 header 的高度調整 */
+}
+@media (max-width: 768px) {
+  .content {
+    flex: 1;
+    padding: 20px;
+    margin-top:200px; /* 根據 header 的高度調整 */
+  }
+  
+
+}

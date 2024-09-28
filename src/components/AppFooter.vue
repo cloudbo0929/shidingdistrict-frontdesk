@@ -7,25 +7,27 @@
       <div class="footer-content">
         <div class="footer-contact">
           <h4>聯絡方式</h4>
-          <p>電話：02 2663 1366</p>
+          <p>電話：(02)2663-1366</p>
           <p>地址：223新北市石碇區石碇西街9號</p>
         </div>
         <div class="footer-section">
           <h4>開放時間</h4>
-          <p>每日 8:00-17:00</p>
+          <p>每日 上午08:00 ~ 下午17:00</p>
         </div>
-
         <div class="footer-section">
           <h4>社群平台</h4>
           <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/sdtour223/?locale=zh_TW" class="social-link">
+              <i class="fab fa-facebook"></i> <span>石碇觀光發展協會FB</span>
+            </a>
+            <a href="https://www.instagram.com/sdtour223/" class="social-link">
+              <i class="fab fa-instagram"></i> <span>石碇觀光發展協會IG</span>
+            </a>
           </div>
         </div>
-
       </div>
       <div class="footer-bottom">
-        <p>Copyright©2024石碇觀光發展協會</p>
+        <p>Copyright©2024 石碇觀光發展協會</p>
       </div>
     </div>
     <div class="footer-image">
@@ -39,7 +41,7 @@ export default {
   name: "AppFooter",
   data() {
     return {
-      footerImage: require("@/assets/images/footer_logo.png"),
+      footerImage: require("@/assets/images/mascot.png"),
     };
   },
 };

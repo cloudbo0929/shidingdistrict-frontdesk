@@ -1,0 +1,221 @@
+
+.news-detail {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.back-button {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #1198c2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+.news-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.news-title {
+  color: #2c3e50;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.news-date {
+  color: #666;
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+.news-content {
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #333;
+  white-space: pre-wrap; /* 保留段落與換行 */
+}
+
+/* 花絮區塊樣式 */
+.gallery {
+  margin-top: 40px;
+}
+
+.gallery-title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.gallery-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* 圖片之間的間距 */
+}
+
+.gallery-image {
+  width: 30%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-image:hover {
+  transform: scale(1.05); /* 當滑鼠移過時圖片放大 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 模態視窗樣式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* 確保模態視窗顯示在最上層 */
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 80vh;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px; /* 為圖片添加圓角 */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px; /* 控制按鈕寬度 */
+  height: 30px; /* 控制按鈕高度 */
+  background: rgba(0, 0, 0, 0.5); /* 改為半透明黑色背景 */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex; /* 使按鈕內容置中 */
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* 增加變化效果 */
+}
+
+.close-button:hover {
+  background: rgba(0, 0, 0, 0.8); /* 當滑鼠移過時背景變深 */
+  transform: scale(1.1); /* 當滑鼠移過時按鈕放大 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* 添加放大陰影 */
+}
+
+.close-button:before {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+
+.thumbnail-container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumbnail-images {
+  display: flex;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.thumbnail-image {
+  width: 50px;
+  height: 50px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.thumbnail-image:hover {
+  transform: scale(1.1);
+  border-color: #1198c2;
+}
+
+.active-thumbnail {
+  border-color: #1198c2;
+}
+
+.thumbnail-arrow {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* 左右箭頭按鈕樣式 */
+.modal-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px; /* 按鈕寬度 */
+  height: 40px; /* 按鈕高度 */
+  border: none;
+  border-radius: 8px; /* 圓角按鈕 */
+  background: rgba(0, 0, 0, 0.7); /* 半透明黑色背景 */
+  color: white; /* 白色箭頭 */
+  font-size: 1.5rem; /* 字體大小 */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease; /* 添加背景色變化過渡效果 */
+}
+
+.modal-arrow:hover {
+  background: rgba(0, 0, 0, 0.9); /* 當懸停時背景變深 */
+}
+
+/* 左箭頭位置 */
+.left-arrow {
+  left: 20px;
+}
+
+/* 右箭頭位置 */
+.right-arrow {
+  right: 20px;
+}
+
+/* 使用 Unicode 字符作為箭頭圖標 */
+.left-arrow::before {
+  content: '◄'; /* 左箭頭符號 */
+}
+
+.right-arrow::before {
+  content: '►'; /* 右箭頭符號 */
+}
