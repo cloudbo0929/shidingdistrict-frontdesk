@@ -1,16 +1,17 @@
 .footer {
   display: flex;
+  flex-wrap: wrap; /* 增加換行以避免小螢幕超出 */
   background-color: #3a7970;
   color: white;
   padding: 2.5rem;
 }
 
 .footer-area {
-  width: 100%;
+  flex: 1;
 }
 
 .footer-image {
-    display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 4rem;
@@ -23,38 +24,37 @@
 }
 
 .footer-top {
-  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+  font-size: clamp(1rem, 1.5vw, 1.8rem);
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   padding-bottom: 10px;
 }
 
 .footer-content {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* 允許換行排版 */
   justify-content: space-between;
+  gap: 20px; /* 區塊間距 */
   margin-bottom: 20px;
 }
 
-.footer-contact {
-  width: 50%;
-}
-
+.footer-contact,
 .footer-section {
-  width: 25%;
+  flex: 1; /* 區塊自適應寬度 */
+  min-width: 200px; /* 避免區塊太小 */
 }
 
 .footer h3 {
-  font-size: clamp(1.5rem, 2.5vw, 3rem);
+  font-size: clamp(1.5rem, 2vw, 2.5rem);
   margin-bottom: 10px;
 }
 
 .footer h4 {
-  font-size: clamp(1.2rem, 2vw, 2rem);
+  font-size: clamp(1.2rem, 1.8vw, 2rem);
   margin-bottom: 10px;
 }
 
 .footer p {
-  font-size: clamp(1rem, 1.8vw, 1.5rem);
+  font-size: clamp(0.8rem, 1.2vw, 1.5rem); /* 進一步縮小字體大小 */
   margin: 5px 0;
 }
 
@@ -64,39 +64,75 @@
   gap: 10px;
 }
 
-.social-icons a {
+.social-link {
   color: white;
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
   text-decoration: none;
+  font-size: clamp(1rem, 1.2vw, 1.5rem); /* 調整文字大小 */
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 圖示與文字間距 */
+  transition: color 0.3s ease;
+}
+
+.social-link i {
+  font-size: 1.5rem; /* 調整圖示大小 */
+}
+
+.social-link:hover {
+  color: #f1c40f; /* 滑鼠移上去時變為亮黃色 */
 }
 
 .footer-bottom {
   margin-top: 30px;
   padding-top: 10px;
-  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+  text-align: center; /* 底部版權文字置中 */
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
 }
 
+/* 響應式設計 */
 @media (max-width: 768px) {
   .footer {
-    display: flex;
+    flex-direction: column; /* 切換為直向排列 */
+    align-items: center;
+    padding: 2rem 1rem;
   }
 
   .footer-content {
-    flex-direction: column;
+    flex-direction: column; /* 區塊垂直排列 */
+    gap: 20px;
+    width: 100%;
   }
 
   .footer-contact,
   .footer-section {
-    width: 100%;
+    width: 100%; /* 區塊寬度 100% */
     margin-bottom: 20px;
   }
 
   .footer-image {
-    width: 10%;
-    margin-right: 7vw;
-    padding: 0;
+    width: 100%;
+    margin: 20px 0;
   }
+
   .footer-image img {
-    width: 10vh;
+    width: 20vw; /* 縮小圖片大小 */
+    height: auto;
+  }
+
+  .footer h3,
+  .footer h4 {
+    font-size: clamp(1.2rem, 1.5vw, 1.8rem); /* 縮小標題字體 */
+  }
+
+  .footer p {
+    font-size: clamp(0.7rem, 1vw, 1rem); /* 縮小段落文字大小 */
+  }
+
+  .social-link {
+    font-size: clamp(0.9rem, 1vw, 1.2rem); /* 縮小文字大小 */
+  }
+
+  .social-link i {
+    font-size: 1.2rem; /* 縮小圖示大小 */
   }
 }

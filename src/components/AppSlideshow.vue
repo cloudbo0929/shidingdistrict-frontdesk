@@ -31,10 +31,10 @@ export default {
     return {
       currentSlide: 0,
       slides: [
-        { image: '/images/S__22667434.jpg', caption: '石碇觀光發展協會獲選新北嚴選特色商品' },
-        { image: 'https://via.placeholder.com/800x400?text=Slide+2', caption: '幻燈片 2' },
-        { image: 'https://via.placeholder.com/800x400?text=Slide+3', caption: '幻燈片 3' },
-        { image: 'https://via.placeholder.com/800x400?text=Slide+4', caption: '幻燈片 4' }
+        { image: '/images/S__22667434.jpg', caption: '2024新北嚴選 🏆恭喜石碇共7個店家獲獎🏆' },
+        { image: '/images/461179406_969423578321485_7823506902429604030_n.jpg', caption: '深坑x石碇-深情石刻 #2024商圈嬉遊季 ' },
+        { image: '/images/456657572_500550832601580_1314269210867125923_n.jpg', caption: '2024山城走走｜9/28秋季社區走讀小旅行培力' },
+        { image: '/images/459837696_963431302254046_90948405633752073_n.jpg', caption: '113年暑期娛樂營活動花絮 113.08.05 第一天' }
       ],
       intervalId: null // 用來儲存定時器的ID
     };
