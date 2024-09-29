@@ -60,7 +60,7 @@ export default {
     templateName: {
       type: String,
       required: true,
-      default: "template_1",
+      default: "relationships",
     },
   },
   data() {
