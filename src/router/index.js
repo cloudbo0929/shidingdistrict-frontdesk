@@ -4,6 +4,11 @@ import AppHome from '@/views/AppHome.vue';
 import AllNews from '@/views/AllNews.vue';
 import NewsDetail from '@/views/NewsDetail.vue'; // 引入新的頁面組件
 import LuckDisplay from '@/views/LuckDisplay.vue';
+import Blessing from '@/views/Blessing.vue';
+import IncompletePage from '@/views/IncompletePage.vue';
+import NotFoundPage from '@/views/NotFoundPage.vue';
+
+
 
 const routes = [
   {
@@ -43,6 +48,17 @@ const routes = [
     },
   },  
   {
+    path: '/luck',
+    name: 'LuckPage',
+    component: Blessing,
+    props: true, // 啟用 props 傳遞，可以接收 route.params
+    meta: {
+      title: '祈福 - 石碇觀光發展協會',
+      image: '/images/mascot.png',
+    },
+  },
+  
+  {
     path: '/luck/:templateName',
     name: 'LuckDisplay',
     component: LuckDisplay,
@@ -51,6 +67,21 @@ const routes = [
       title: '運勢詳細頁面 - 石碇觀光發展協會',
       image: '/images/mascot.png',
     },
+  },
+
+  {
+    path: '/IncompletePage',
+    name: 'IncompletePage',
+    component: IncompletePage,
+    meta: {
+      title: '功能尚未上線',
+      image: '/images/mascot.png',
+    },
+  },
+  {
+    path: '/:pathMatch(.*)*', // 匹配所有未知路徑
+    name: 'NotFound',
+    component: NotFoundPage,
   },
 ];
 

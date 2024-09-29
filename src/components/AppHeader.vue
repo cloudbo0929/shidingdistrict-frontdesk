@@ -10,8 +10,8 @@
       <ul>
         <li><router-link to="/">最新消息</router-link></li>
         <li><router-link to="/introduction">關於集順廟</router-link></li>
-        <li><a href="#">抽個籤</a></li>
-        <li><a href="#">商品展示</a></li>
+        <li><router-link to="/luck">抽個籤</router-link></li>
+        <li><router-link to="/IncompletePage">商品展示</router-link></li>
       </ul>
     </nav>
   </header>
