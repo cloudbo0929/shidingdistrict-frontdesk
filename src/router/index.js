@@ -2,12 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router';
 import AppIntroduction from '@/views/AppIntroduction.vue';
 import AppHome from '@/views/AppHome.vue';
 import AllNews from '@/views/AllNews.vue';
-import NewsDetail from '@/views/NewsDetail.vue'; // 引入新的頁面組件
+import NewsDetail from '@/views/NewsDetail.vue';
 import LuckDisplay from '@/views/LuckDisplay.vue';
 import Blessing from '@/views/Blessing.vue';
 import IncompletePage from '@/views/IncompletePage.vue';
 import NotFoundPage from '@/views/NotFoundPage.vue';
-
+import SpiritualPage from '@/views/AppSpiritualPage.vue';
 
 
 const routes = [
@@ -17,7 +17,7 @@ const routes = [
     component: AppHome,
     meta: {
       title: '石碇觀光發展協會首頁',
-      image: '/images/mascot.png', // 預設分享圖片
+      image: '/images/mascot.png',
     },
   },
   {
@@ -51,7 +51,7 @@ const routes = [
     path: '/luck',
     name: 'LuckPage',
     component: Blessing,
-    props: true, // 啟用 props 傳遞，可以接收 route.params
+    props: true,
     meta: {
       title: '祈福 - 石碇觀光發展協會',
       image: '/images/mascot.png',
@@ -62,9 +62,20 @@ const routes = [
     path: '/luck/:templateName',
     name: 'LuckDisplay',
     component: LuckDisplay,
-    props: true, // 啟用 props 傳遞，可以接收 route.params
+    props: true,
     meta: {
       title: '運勢詳細頁面 - 石碇觀光發展協會',
+      image: '/images/mascot.png',
+    },
+  },
+
+  {
+    path: '/SpiritualPage',
+    name: 'SpiritualPage',
+    component: SpiritualPage,
+    props: true,
+    meta: {
+      title: '心靈小語 - 石碇觀光發展協會',
       image: '/images/mascot.png',
     },
   },
@@ -79,7 +90,7 @@ const routes = [
     },
   },
   {
-    path: '/:pathMatch(.*)*', // 匹配所有未知路徑
+    path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: NotFoundPage,
   },
