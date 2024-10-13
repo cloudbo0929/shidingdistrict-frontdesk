@@ -20,8 +20,7 @@ main, .main-content, .slider {
 @media (max-width: 768px) {
   .content {
     flex: 1;
-    margin-top:200px; /* 根據 header 的高度調整 */
+    margin-top: 0;
   }
-  
 
 }

@@ -83,6 +83,7 @@
 @media (max-width: 768px) {
   
   .header {
+    position: relative;
     flex-direction: column;
     align-items: flex-start;
     overflow: hidden;
@@ -102,8 +103,7 @@
     width: 100%;
     text-align: left;
     padding: 10px 0;
-      white-space: nowrap;
-
+    white-space: nowrap;
   }
 
   .nav a {
