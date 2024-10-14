@@ -12,6 +12,7 @@
         @click="showRandomQuote(index)"
         :class="{ disabled: resultVisible }"
       >
+      <p :class="omamori.class">{{ omamori.name }}</p>
         <img :src="omamori.image" :alt="omamori.name" class="omamori-image" />
       </div>
     </div>
@@ -21,7 +22,7 @@
       <div v-if="selectedQuote" class="quote-display" ref="quoteSection">
         <h2 :class="categoryColorClass" class="quote-category">《{{ selectedCategory }}》</h2>
         <p class="quote-text">「{{ selectedQuote.text }}」</p>
-        <p class="recommended">{{ recommendedText }}</p>
+        <p class="recommended">— {{ recommendedText }}</p>
         <div class="button-group">
           <button class="link-btn" @click="openLink(selectedQuote.link)" target="_blank">獲得滿滿能量</button>
           <button class="retry-btn" @click="handleRetry">再來一則小語</button>
@@ -38,19 +39,19 @@ export default {
   data() {
     return {
       omamoriImages: [
-        { name: '紅色繡線', image: require('@/assets/images/omamori/red.png') },
-        { name: '橙色繩線', image: require('@/assets/images/omamori/orange.png') },
-        { name: '黃色繡線', image: require('@/assets/images/omamori/yellow.png') },
-        { name: '綠色繡線', image: require('@/assets/images/omamori/green.png') },
-        { name: '藍色繡線', image: require('@/assets/images/omamori/blue.png') },
-        { name: '紫色繡線', image: require('@/assets/images/omamori/purple.png') },
-        { name: '白色繡線', image: require('@/assets/images/omamori/white.png') },
-        { name: '黑色繡線', image: require('@/assets/images/omamori/black.png') }
-      ],
+      { name: '勇氣與熱情', image: require('@/assets/images/omamori/red.png'), class: 'red-title' },
+      { name: '創意與活力', image: require('@/assets/images/omamori/orange.png'), class: 'orange-title' },
+      { name: '智慧與光明', image: require('@/assets/images/omamori/yellow.png'), class: 'yellow-title' },
+      { name: '成長與希望', image: require('@/assets/images/omamori/green.png'), class: 'green-title' },
+      { name: '平靜與智慧', image: require('@/assets/images/omamori/blue.png'), class: 'blue-title' },
+      { name: '靈性與深度', image: require('@/assets/images/omamori/purple.png'), class: 'purple-title' },
+      { name: '純淨與初心', image: require('@/assets/images/omamori/white.png'), class: 'white-title' },
+      { name: '力量與保護', image: require('@/assets/images/omamori/black.png'), class: 'black-title' }
+    ],
       quotes: quotesData,
       selectedQuote: null,
       selectedCategory: null,
-      recommendedText: '-- 推薦您去....................。',
+      recommendedText: '', // 初始化為空
       resultVisible: false
     };
   },
@@ -58,16 +59,16 @@ export default {
     categoryColorClass() {
       if (!this.selectedCategory) return '';
       const colorMap = {
-        '紅色繡線': 'red-title',
-        '橙色繡線': 'orange-title',
-        '黃色繡線': 'yellow-title',
-        '綠色繡線': 'green-title',
-        '藍色繡線': 'blue-title',
-        '紫色繡線': 'purple-title',
-        '白色繡線': 'white-title',
-        '黑色繡線': 'black-title',
+        '勇氣與熱情': 'red-title',
+        '創意與活力': 'orange-title',
+        '智慧與光明': 'yellow-title',
+        '成長與希望': 'green-title',
+        '平靜與智慧': 'blue-title',
+        '靈性與深度': 'purple-title',
+        '純淨與初心': 'white-title',
+        '力量與保護': 'black-title',
       };
-      const categoryKey = this.selectedCategory.slice(0, 4);
+      const categoryKey = this.selectedCategory.slice(7, 12);
       return colorMap[categoryKey] || '';
     }
   },
@@ -79,8 +80,15 @@ export default {
       this.$nextTick(() => {
         const categoryQuotes = this.quotes[index].quotes;
         const randomIndex = Math.floor(Math.random() * categoryQuotes.length);
-        this.selectedQuote = categoryQuotes[randomIndex];
+        const randomQuote = categoryQuotes[randomIndex];
+        
+        // 設定選中的名言及類別
+        this.selectedQuote = randomQuote;
         this.selectedCategory = this.quotes[index].category;
+        
+        // 套用 suggestion 到 recommendedText
+        this.recommendedText = randomQuote.suggestion;
+
         this.resultVisible = true;
 
         this.$nextTick(() => {
@@ -99,7 +107,7 @@ export default {
       const quoteSection = this.$refs.quoteSection;
       if (quoteSection) {
         window.scrollTo({
-          top: quoteSection.offsetTop - 200,
+          top: document.body.scrollHeight,
           behavior: 'smooth'
         });
       }
@@ -121,5 +129,6 @@ export default {
   }
 };
 </script>
+
 
 <style scoped src="@/assets/css/appSpiritualPage.css"></style>

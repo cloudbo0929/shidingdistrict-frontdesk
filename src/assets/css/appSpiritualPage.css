@@ -1,9 +1,10 @@
+
 .spiritual-page {
+  margin-top: -150px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
 }
 
 /* 頁面標題樣式 */
@@ -11,22 +12,28 @@
   font-size: clamp(20px, 5vw, 3rem);
   font-weight: bold;
   color: #626060;
-  margin-top: 2rem;
   text-align: center;
 }
 
 /* 御守網格設定 */
 .omamori-grid {
   display: grid;
+  align-items: center;
+  justify-content: center;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
-  padding: clamp(2rem, 5vw, 5rem);
 }
 
 .omamori-item {
   cursor: pointer;
   transition: transform 0.3s ease;
-  text-align: center;
+}
+
+.omamori-item p {
+  text-align: right;
+  font-weight: 700;
+  font-size: clamp(25px, 2.5vw, 45px);
+  margin-right: -20px;
 }
 
 .omamori-image {
@@ -56,7 +63,7 @@
 
 .quote-display {
   margin: 15rem 0;
-  padding: 50px;
+  padding: 25px;
   width: clamp(40rem, 50vw, 45rem);
   background-color: #f9f9f9;
   border: 2px solid #ddd;
@@ -91,25 +98,28 @@
   font-size: 2.4rem;
   font-weight: bold;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .quote-text {
   color: #333;
-  margin: 50px 0;
+  margin: 50px auto;
   font-size: 2rem;
   line-height: 1.8;
   opacity: 0;
   animation: fade-line-in 2s ease-in forwards;
+  width: 80%;
 }
 
 .recommended {
-  margin: 40px 0;
+  margin: 40px auto;
   font-size: 1.6rem;
   color: #666;
   margin-bottom: 20px;
   opacity: 0;
   animation: fade-line-in 1.5s ease-in forwards;
   animation-delay: 3s;
+  width: 80%;
 }
 
 .button-group {
@@ -162,6 +172,10 @@
 }
 
 @media (max-width: 768px) {
+  .spiritual-page {
+    margin-top: 0;
+  }
+
   .omamori-grid {
     grid-template-columns: repeat(2, 1fr);
     margin-left: -5%;
@@ -173,11 +187,12 @@
   }
 
   .quote-display {
-    width: 80%;
-    padding: 30px;
+    width: 85%;
+    padding: 20px;
     font-size: 1.5rem;
     min-height: 250px;
-    margin: 5rem 0;
+    margin-top: 6rem;
+    margin-bottom: 0;
   }
 
   .quote-category {
@@ -189,10 +204,14 @@
   }
 
   .recommended {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   .link-btn, .retry-btn {
-    font-size: clamp(0.7rem, 3vw, 1.2rem);
+    font-size: 1.2rem;
+  }
+
+  .omamori-item p {
+    margin-right: 0;
   }
 }
