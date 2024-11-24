@@ -1,0 +1,342 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* 禁止出現滾動條 */
+  }
+  
+  /* 圖片容器 */
+  .image-container {
+    position: fixed;
+    width: 45vw; /* 圖片寬度，可以根據需要調整 */
+    margin: 0 auto;
+    overflow: visible; /* 確保圖片超出容器時可見 */
+    top: 10%; /* 視窗高度的 50% */
+    left: 50%; /* 視窗寬度的 50% */
+    transform: translate(-50%, -20%); /* 水平與垂直居中 */
+  }
+  
+  /* 添加左右晃動動畫 */
+  .swing-image {
+    display: block;
+    width: 100%; /* 確保圖片適應容器寬度 */
+    animation: swing 3s infinite ease-in-out;
+  }
+  
+  /* 定義晃動動畫 */
+  @keyframes swing {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-5deg); /* 向左旋轉 */
+    }
+    50% {
+      transform: rotate(0deg); /* 回到中間 */
+    }
+    75% {
+      transform: rotate(5deg); /* 向右旋轉 */
+    }
+    100% {
+      transform: rotate(0deg); /* 回到中間 */
+    }
+  }
+  
+  
+  .background {
+    position: fixed; /* 確保背景固定在視窗內 */
+    top: 0;
+    left: 0;
+    width: 100vw; /* 占滿視窗寬度 */
+    height: 100vh; /* 占滿視窗高度 */
+    background-image: url('@/assets/images/SHGbackground1.png'); /* 替換為實際圖片路徑 */
+    background-size: cover; /* 確保背景圖片覆蓋整個區域 */
+    background-position: center;
+    background-repeat: no-repeat; /* 禁止背景圖片重複 */
+  }
+  
+  /* 點擊區域 */
+  .click-circle {
+    position: absolute;
+    top: 67%; /* 圓圈的相對位置 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15vw; /* 寬度為背景寬度的 15% */
+    aspect-ratio: 1; /* 確保高度與寬度相等，保持正圓 */
+    border-radius: 50%;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0); /* 可視化點擊範圍，測試時用 */
+  }
+  
+  
+  /* 修改彈出視窗的背景層 */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* 初始透明 */
+    visibility: hidden; /* 初始不可見 */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* 過渡效果 */
+  }
+  
+  /* 當視窗打開時的狀態 */
+  .modal-overlay.open {
+    opacity: 1;
+    visibility: visible; /* 顯示視窗 */
+  }
+  
+  /* 修改彈出視窗的內容 */
+  .modal-content {
+    position: relative;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    transform: scale(0.8); /* 初始縮小 */
+    opacity: 0; /* 初始透明 */
+    transition: all 0.3s ease-in-out; /* 過渡效果 */
+  
+  
+  }
+  
+  /* 當視窗打開時，內容放大並顯示 */
+  .modal-overlay.open .modal-content {
+    transform: scale(1); /* 還原大小 */
+    opacity: 1; /* 完全可見 */
+  }
+  
+  /* 彈出視窗內容 */
+  .modal-content {
+    position: relative; /* 設置相對定位，讓關閉按鈕能正確定位 */
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 90%; /* 手機版彈窗調整寬度 */
+    max-width: 400px; /* 限制最大寬度 */
+  }
+  
+  .modal-title{
+    font-size: 20px;
+    font-weight: bold; /* 加粗 */
+    margin-bottom: 20px;
+    margin-bottom: 15px; /* 與下方內容間距 */
+    color: #6B3E23; /* 字體顏色 */
+    text-align: center; /* 文字居中 */
+  }
+  
+  
+  .modal-image {
+    width: 100%;
+    height: auto; 
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: contain; 
+    margin: 0 auto 10px; 
+    border-radius: 8px;
+  }
+  
+  .modal-text {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .animated-button {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #64BE94;
+    color: white;
+    text-decoration: none;
+    opacity: 0; /* 初始不可見 */
+    transform: translateY(20px); /* 往下偏移 */
+    transition: all 0.5s ease-in-out; /* 過渡效果 */
+    animation: button-fade-in 1s ease-out forwards; /* 動畫觸發 */
+  }
+  
+  @keyframes button-fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(20px); /* 往下偏移 */
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0); /* 復原位置 */
+    }
+  }
+  
+  .animated-button:hover {
+    background-color: #42795f; /* 鼠標懸停效果 */
+    transform: scale(1.1); /* 放大效果 */
+  }
+  
+  .close-button {
+    position: absolute; /* 絕對定位 */
+    top: 10px; /* 距離彈出視窗頂部的距離 */
+    right: 10px; /* 距離彈出視窗右邊的距離 */
+    background: none; /* 無背景 */
+    border: none; /* 無邊框 */
+    font-size: 18px; /* 圖標大小 */
+    color: #333; /* 圖標顏色 */
+    cursor: pointer; /* 滑鼠移上去時顯示為指針 */
+  }
+  
+  .close-button:hover {
+    color: #f44336; /* 滑鼠懸停時的顏色 */
+    transform: scale(1.1); /* 稍微放大 */
+    transition: all 0.2s; /* 過渡效果 */
+  }
+  
+  
+  /* 響應式設計 */
+  @media screen and (min-width: 1025px) {
+    .background {
+      width: 100vw; /* 占滿視窗寬度 */
+      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
+    }
+    /* 圖片容器 */
+    .image-container {
+      position: fixed;
+      margin: 0 auto;
+      overflow: visible; /* 確保圖片超出容器時可見 */
+      z-index: 1000; /* 設定容器的層級 */
+    }
+  
+    .click-circle {
+      top: 73%; /* 上移圓圈位置 */
+      width: 20vw; /* 更小的寬度，適配大屏幕 */
+    }
+  
+    .modal-content {
+      max-width: 600px; /* 更大的彈窗寬度 */
+      padding: 30px; /* 增加內邊距 */
+      font-size: 18px; /* 提高字體大小 */
+    }
+  }
+  
+  @media screen and (max-width: 1024px) {
+      .background {
+      width: 100vw; /* 占滿視窗寬度 */
+      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
+    }
+    .image-container {
+      position: fixed;
+      margin: 0 auto;
+      overflow: visible; /* 確保圖片超出容器時可見 */
+      z-index: 1000; /* 設定容器的層級 */
+    }
+  
+    .click-circle {
+      top: 73%;
+      width: 55vw; /* 調整寬度 */
+    }
+  }
+  
+  /* 手機 (最大寬度 768px) */
+  @media screen and (max-width: 768px) {
+    .background {
+      width: 100vw; /* 占滿視窗寬度 */
+      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
+    }
+    .image-container {
+      position: fixed;
+      margin: 0 auto;
+      overflow: visible; /* 確保圖片超出容器時可見 */
+      z-index: 1000; /* 設定容器的層級 */
+    }
+    .click-circle {
+      top: 73%;
+      width: 55vw; /* 手機上圈圈稍微縮小 */
+    }
+    .modal-content {
+      font-size: 14px; /* 調整字體大小 */
+      padding: 15px; /* 減少內距 */
+    }
+  }
+  
+  /* 小型手機 (最大寬度 480px) */
+  @media screen and (max-width: 480px) {
+    .background {
+      width: 100vw; /* 占滿視窗寬度 */
+      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
+    }
+    .image-container {
+      top: 13%; /* 視窗高度的 50% */
+      position: fixed;
+      margin: 0 auto;
+      overflow: visible; /* 確保圖片超出容器時可見 */
+      z-index: 1000; /* 設定容器的層級 */
+    }
+  
+    .click-circle {
+      top: 75%;
+      width: 65vw; /* 更小屏幕圈圈大小 */
+    }
+    .modal-content {
+      font-size: 12px; /* 進一步調整字體大小 */
+    }
+  }
+  
+  @media screen and (max-width:440px) {
+    .background {
+      width: 100vw; /* 占滿視窗寬度 */
+      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
+    }
+  
+    .image-container {
+      top: 20%; /* 視窗高度的 50% */
+      position: fixed;
+      margin: 0 auto;
+      overflow: visible; /* 確保圖片超出容器時可見 */
+      z-index: 1000; /* 設定容器的層級 */
+    }
+  
+    .click-circle {
+      top: 70%; /* 上移圈圈位置，防止太靠下 */
+      width: 70vw; /* 調整圈圈寬度，適配小屏幕 */
+    }
+  
+    .modal-content {
+      font-size: 10px; /* 縮小字體大小，確保內容可讀 */
+      padding: 10px; /* 減少內距，避免內容擠壓 */
+    }
+  }
+  @media screen and (max-width:400px) {
+    .background {
+      width: 100vw; /* 占滿視窗寬度 */
+      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
+    }
+  
+    .image-container {
+      top: 18%; /* 視窗高度的 50% */
+      position: fixed;
+      margin: 0 auto;
+      overflow: visible; /* 確保圖片超出容器時可見 */
+      z-index: 1000; /* 設定容器的層級 */
+    }
+  
+    .click-circle {
+      top: 65%; /* 上移圈圈位置，防止太靠下 */
+      width: 65vw; /* 調整圈圈寬度，適配小屏幕 */
+    }
+  
+    .modal-content {
+      font-size: 10px; /* 縮小字體大小，確保內容可讀 */
+      padding: 10px; /* 減少內距，避免內容擠壓 */
+    }
+  }

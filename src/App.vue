@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     showHeaderAndFooter() {
-      const hideOnRoutes = ['/SpiritualPage'];
+      const hideOnRoutes = ['/SpiritualPage','/ShenShiTemple'];
       return !hideOnRoutes.includes(this.$route.path);
     }
   }

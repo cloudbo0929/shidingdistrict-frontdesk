@@ -8,6 +8,7 @@ import Blessing from '@/views/Blessing.vue';
 import IncompletePage from '@/views/IncompletePage.vue';
 import NotFoundPage from '@/views/NotFoundPage.vue';
 import SpiritualPage from '@/views/AppSpiritualPage.vue';
+import ShenShihGong from '@/views/AppShenShihGong.vue';
 
 
 const routes = [
@@ -93,6 +94,11 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: NotFoundPage,
+  },
+  {
+    path: '/ShenShiTemple',
+    name: 'ShenShiTemple',
+    component: ShenShihGong,
   },
 ];
 
