@@ -6,41 +6,102 @@ html, body {
     overflow: hidden; /* 禁止出現滾動條 */
   }
   
-  /* 圖片容器 */
   .image-container {
-    position: fixed;
-    width: 45vw; /* 圖片寬度，可以根據需要調整 */
-    margin: 0 auto;
-    overflow: visible; /* 確保圖片超出容器時可見 */
-    top: 10%; /* 視窗高度的 50% */
-    left: 50%; /* 視窗寬度的 50% */
-    transform: translate(-50%, -20%); /* 水平與垂直居中 */
+    position: absolute; /* 或 fixed, 根據你的需求 */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 200px;
   }
-  
-  /* 添加左右晃動動畫 */
-  .swing-image {
-    display: block;
-    width: 100%; /* 確保圖片適應容器寬度 */
-    animation: swing 3s infinite ease-in-out;
+/* 圖片 */
+.swing-image {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  animation: slide-in 1s ease-out, swing 3s infinite ease-in-out;
+    top: 60%; /* 預設值 */
+
+}
+
+/* 定義滑入動畫 */
+@keyframes slide-in {
+  0% {
+    transform: translateY(-100px); /* 從上方滑入 */
+    opacity: 0;
   }
-  
-  /* 定義晃動動畫 */
-  @keyframes swing {
-    0% {
-      transform: rotate(0deg);
-    }
-    25% {
-      transform: rotate(-5deg); /* 向左旋轉 */
+  100% {
+    transform: translateY(0); /* 回到初始位置 */
+    opacity: 1;
+  }
+}
+
+/* 定義星星閃耀效果 */
+@keyframes star-twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/* 星星容器 */
+.swing-image-container {
+  position: relative;
+}
+
+  .star {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: transparent; /* 背景透明，主要靠邊框 */
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    ); /* 五角星形狀 */
+    background-color: rgb(255, 255, 255);
+    opacity: 0;
+    animation: star-twinkle 2s infinite ease-in-out;
+  }
+
+  /* 星星閃耀動畫 */
+  @keyframes star-twinkle {
+    0%, 100% {
+      opacity: 0;
+      transform: scale(0.5) rotate(0deg);
     }
     50% {
-      transform: rotate(0deg); /* 回到中間 */
+      opacity: 1;
+      transform: scale(1.2) rotate(20deg); /* 放大和旋轉 */
     }
-    75% {
-      transform: rotate(5deg); /* 向右旋轉 */
-    }
-    100% {
-      transform: rotate(0deg); /* 回到中間 */
-    }
+  }
+
+  /* 星星位置調整 */
+  .star-1 {
+    top: 50%;
+    left: 20%;
+    animation-delay: 0.2s;
+  }
+  .star-2 {
+    top: 30%;
+    left: 50%;
+    animation-delay: 0.4s;
+  }
+  .star-3 {
+    top: 70%;
+    left: 80%;
+    animation-delay: 0.6s;
   }
   
   
@@ -50,7 +111,7 @@ html, body {
     left: 0;
     width: 100vw; /* 占滿視窗寬度 */
     height: 100vh; /* 占滿視窗高度 */
-    background-image: url('@/assets/images/SHGbackground1.png'); /* 替換為實際圖片路徑 */
+    background-image: url('@/assets/images/SHGbackground.png'); /* 替換為實際圖片路徑 */
     background-size: cover; /* 確保背景圖片覆蓋整個區域 */
     background-position: center;
     background-repeat: no-repeat; /* 禁止背景圖片重複 */
@@ -80,6 +141,7 @@ html, body {
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
+    z-index: 1001 !important;
     align-items: center;
     opacity: 0; /* 初始透明 */
     visibility: hidden; /* 初始不可見 */
@@ -114,18 +176,7 @@ html, body {
     transform: scale(1); /* 還原大小 */
     opacity: 1; /* 完全可見 */
   }
-  
-  /* 彈出視窗內容 */
-  .modal-content {
-    position: relative; /* 設置相對定位，讓關閉按鈕能正確定位 */
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    width: 90%; /* 手機版彈窗調整寬度 */
-    max-width: 400px; /* 限制最大寬度 */
-  }
+
   
   .modal-title{
     font-size: 20px;
@@ -205,16 +256,13 @@ html, body {
   
   /* 響應式設計 */
   @media screen and (min-width: 1025px) {
+    .image-container {
+      top: 30%;
+      width: 200px;
+    }
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-    /* 圖片容器 */
-    .image-container {
-      position: fixed;
-      margin: 0 auto;
-      overflow: visible; /* 確保圖片超出容器時可見 */
-      z-index: 1000; /* 設定容器的層級 */
     }
   
     .click-circle {
@@ -230,17 +278,14 @@ html, body {
   }
   
   @media screen and (max-width: 1024px) {
+    .image-container {
+      top: 30%;
+      max-width: 200px;
+    }
       .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
     }
-    .image-container {
-      position: fixed;
-      margin: 0 auto;
-      overflow: visible; /* 確保圖片超出容器時可見 */
-      z-index: 1000; /* 設定容器的層級 */
-    }
-  
     .click-circle {
       top: 73%;
       width: 55vw; /* 調整寬度 */
@@ -249,15 +294,14 @@ html, body {
   
   /* 手機 (最大寬度 768px) */
   @media screen and (max-width: 768px) {
+    .image-container {
+      top: 30%;
+      width: 400px;
+    }
+
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-    .image-container {
-      position: fixed;
-      margin: 0 auto;
-      overflow: visible; /* 確保圖片超出容器時可見 */
-      z-index: 1000; /* 設定容器的層級 */
     }
     .click-circle {
       top: 73%;
@@ -271,16 +315,14 @@ html, body {
   
   /* 小型手機 (最大寬度 480px) */
   @media screen and (max-width: 480px) {
+    .image-container {
+      top: 30%;
+      max-width: 350px;
+    }
+    
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-    .image-container {
-      top: 13%; /* 視窗高度的 50% */
-      position: fixed;
-      margin: 0 auto;
-      overflow: visible; /* 確保圖片超出容器時可見 */
-      z-index: 1000; /* 設定容器的層級 */
     }
   
     .click-circle {
@@ -293,17 +335,13 @@ html, body {
   }
   
   @media screen and (max-width:440px) {
+    .image-container {
+      top: 15%;
+      max-width: 350px;
+    }
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-  
-    .image-container {
-      top: 20%; /* 視窗高度的 50% */
-      position: fixed;
-      margin: 0 auto;
-      overflow: visible; /* 確保圖片超出容器時可見 */
-      z-index: 1000; /* 設定容器的層級 */
     }
   
     .click-circle {
@@ -317,17 +355,13 @@ html, body {
     }
   }
   @media screen and (max-width:400px) {
+    .image-container {
+      top: 200%;
+      max-width: 350px;
+    }
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-  
-    .image-container {
-      top: 18%; /* 視窗高度的 50% */
-      position: fixed;
-      margin: 0 auto;
-      overflow: visible; /* 確保圖片超出容器時可見 */
-      z-index: 1000; /* 設定容器的層級 */
     }
   
     .click-circle {

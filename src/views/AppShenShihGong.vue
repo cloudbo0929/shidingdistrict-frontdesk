@@ -1,30 +1,32 @@
 <template>
+  <!-- 彈出視窗 -->
+  <div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
+    <div class="modal-content" @click.stop>
+      <!-- 關閉按鈕 -->
+      <button class="close-button" @click="closeModal">
+        <i class="fas fa-times"></i>
+      </button>
+      <p class="modal-title">人生語錄 石在有靈</p>
+      <img class="modal-image" :src="selectedImage.src" alt="內容圖片" />
+      <p class="modal-text">了解更多，點擊前往解方</p>
+      <div class="button-container">
+        <a :href="selectedImage.link" target="_blank" class="action-button animated-button">前往網站</a>
+      </div>
+    </div>
+  </div>
   <div>
-    <!-- 添加固定比例和位置的晃動圖片 -->
-    <!-- <div class="image-container">
+    <div class="image-container swing-image-container">
       <img src="@/assets/images/title_sht.png" alt="晃動圖片" class="swing-image" />
-    </div> -->
-
+      <!-- 五角星效果 -->
+      <div class="star star-1"></div>
+      <div class="star star-2"></div>
+      <div class="star star-3"></div>
+    </div>
     <!-- 背景和彈窗功能 -->
     <div class="background">
       <!-- 點擊區域 -->
       <div class="click-circle" @click="openModal"></div>
 
-      <!-- 彈出視窗 -->
-      <div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
-        <div class="modal-content" @click.stop>
-          <!-- 關閉按鈕 -->
-          <button class="close-button" @click="closeModal">
-            <i class="fas fa-times"></i>
-          </button>
-          <p class="modal-title">人生語錄 石在有靈</p>
-          <img class="modal-image" :src="selectedImage.src" alt="內容圖片" />
-          <p class="modal-text">了解更多，點擊前往解方</p>
-          <div class="button-container">
-            <a :href="selectedImage.link" target="_blank" class="action-button animated-button">前往網站</a>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -34,17 +36,21 @@
 
 
 <script>
+
 export default {
+  
   data() {
     return {
       isModalOpen: false,
       selectedImage: null, // 儲存隨機選中的圖片物件
       images: [],
+
     };
   },
   created() {
     this.loadImages(); // 在組件創建時加載圖片
   },
+
   methods: {
     // 加載資料夾中的所有圖片
     loadImages() {
@@ -121,6 +127,13 @@ export default {
         this.isModalOpen = false;
       }, 300); // 與 CSS 過渡時間對應
     },
+    mounted() {
+      setTimeout(() => {
+        const image = document.querySelector('.swing-image');
+        image.classList.add('swing-active'); // 為圖片添加動畫類名
+      }, 1000); // 延遲 1 秒
+    },
+
   },
 };
 </script>
