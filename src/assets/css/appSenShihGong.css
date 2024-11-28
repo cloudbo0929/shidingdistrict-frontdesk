@@ -7,15 +7,47 @@ html, body {
   }
   
   .image-container {
-    position: absolute; /* 或 fixed, 根據你的需求 */
+    position: fixed;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    width: 200px;
+    width: auto;/* 預設寬度 */
+    transition: all 0.3s ease-in-out; /* 保留平滑過渡 */
   }
+
+  .text-overlay {
+    top: 20%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* 防止文字干擾點擊 */
+  }
+  
+  .animated-text {
+    position: absolute;
+    transform: translate(-50%, -50%); /* 使文字以中心點定位 */
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    opacity: 0;
+    animation: fadeInUp 1s forwards;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+
 /* 圖片 */
 .swing-image {
-  max-width: 400px;
   width: 100%;
   height: auto;
   animation: slide-in 1s ease-out, swing 3s infinite ease-in-out;
@@ -256,10 +288,7 @@ html, body {
   
   /* 響應式設計 */
   @media screen and (min-width: 1025px) {
-    .image-container {
-      top: 30%;
-      width: 200px;
-    }
+
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
@@ -278,10 +307,6 @@ html, body {
   }
   
   @media screen and (max-width: 1024px) {
-    .image-container {
-      top: 30%;
-      max-width: 200px;
-    }
       .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
@@ -294,11 +319,6 @@ html, body {
   
   /* 手機 (最大寬度 768px) */
   @media screen and (max-width: 768px) {
-    .image-container {
-      top: 30%;
-      width: 400px;
-    }
-
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
@@ -315,11 +335,6 @@ html, body {
   
   /* 小型手機 (最大寬度 480px) */
   @media screen and (max-width: 480px) {
-    .image-container {
-      top: 30%;
-      max-width: 350px;
-    }
-    
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
@@ -335,10 +350,6 @@ html, body {
   }
   
   @media screen and (max-width:440px) {
-    .image-container {
-      top: 15%;
-      max-width: 350px;
-    }
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
@@ -355,10 +366,7 @@ html, body {
     }
   }
   @media screen and (max-width:400px) {
-    .image-container {
-      top: 200%;
-      max-width: 350px;
-    }
+
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */

@@ -25,6 +25,16 @@
     <!-- 背景和彈窗功能 -->
     <div class="background">
       <!-- 點擊區域 -->
+        <div class="text-overlay">
+    <p
+      class="animated-text"
+      v-for="(line, index) in textLines"
+      :key="index"
+      :style="{ top: line.top, left: line.left, animationDelay: `${index * 1}s` }"
+    >
+      {{ line.text }}
+    </p>
+  </div>
       <div class="click-circle" @click="openModal"></div>
 
     </div>
@@ -44,14 +54,60 @@ export default {
       isModalOpen: false,
       selectedImage: null, // 儲存隨機選中的圖片物件
       images: [],
-
+      textLines: [
+      { text: "幽默的方式", top: "32%", left: "8%" },
+      { text: "期待生活的挑戰", top: "30%", left: "70%" },
+      { text: "指點迷津新體驗", top: "60%", left: "8%" },
+      { text: "美食景點大推薦", top: "60%", left: "70%" }
+      ]    
     };
   },
   created() {
     this.loadImages(); // 在組件創建時加載圖片
   },
+  mounted() {
+    this.adjustImageContainer(); // 初始化時調整位置與大小
+    window.addEventListener("resize", this.adjustImageContainer); // 監聽螢幕尺寸變化
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.adjustImageContainer); // 清理監聽器
+  },
 
   methods: {
+    
+    adjustImageContainer() {
+      const container = document.querySelector(".image-container");
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+
+      // 根據螢幕大小調整樣式
+      if (screenWidth > 1024) {
+        container.style.top = `${screenHeight * -0.2}px`;
+        container.style.width = "400px";
+      } else if (screenWidth == 1024 ) {
+        container.style.top = `${screenHeight * -0.05}px`;
+        container.style.width = "650px";
+      } else if (screenWidth < 1024 && screenWidth > 768) {
+        container.style.top = `${screenHeight * -0.08}px`;
+        container.style.width = "600px";
+      } else if (screenWidth == 768) {
+        container.style.top = `${screenHeight * 0.06}px`;
+        container.style.width = "490px";
+      } else if (screenWidth < 768 && screenWidth > 480) {
+        container.style.top = `${screenHeight * 0.02}px`;
+        container.style.width = "350px";
+      } else if (screenWidth <= 480 && screenWidth > 375) {
+        container.style.top = `${screenHeight * 0.13}px`;
+        container.style.width = "340px";
+      } else if (screenWidth == 375) {
+        container.style.top = `${screenHeight * 0.05}px`;
+        container.style.width = "320px";
+      } else {
+        container.style.top = `${screenHeight * 0.11}px`;
+        container.style.width = "300px";
+      }
+    },
+
     // 加載資料夾中的所有圖片
     loadImages() {
       const requireContext = require.context(
