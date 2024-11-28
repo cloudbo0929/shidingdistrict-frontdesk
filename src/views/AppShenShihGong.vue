@@ -35,8 +35,9 @@
       {{ line.text }}
     </p>
   </div>
-      <div class="click-circle" @click="openModal"></div>
-
+  <div class="click-circle" @click="openModal">
+        <img src="@/assets/images/shenshi.png" alt="點擊圖片" class="click-image" />
+      </div>
     </div>
   </div>
 </template>
@@ -74,40 +75,81 @@ export default {
   },
 
   methods: {
-    
+    updateTextLines(top1, left1, top2, left2, top3, left3, top4, left4) {
+    this.textLines = [
+      { text: "幽默的方式", top: `${top1}%`, left: `${left1}%` },
+      { text: "期待生活的挑戰", top: `${top2}%`, left: `${left2}%` },
+      { text: "指點迷津新體驗", top: `${top3}%`, left: `${left3}%` },
+      { text: "美食景點大推薦", top: `${top4}%`, left: `${left4}%` },
+    ];
+  },
+
     adjustImageContainer() {
       const container = document.querySelector(".image-container");
+      const clickCircle = document.querySelector(".click-circle");
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight;
+      this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
 
       // 根據螢幕大小調整樣式
       if (screenWidth > 1024) {
         container.style.top = `${screenHeight * -0.2}px`;
-        container.style.width = "400px";
+        container.style.width = "380px";
+        clickCircle.style.top = "75%";
+        clickCircle.style.width = "17vw";
+        this.updateTextLines(32, 38, 33, 55, 67, 38, 70, 55); // 更新文字位置
+
       } else if (screenWidth == 1024 ) {
         container.style.top = `${screenHeight * -0.05}px`;
         container.style.width = "650px";
+        clickCircle.style.top = "75%";
+        clickCircle.style.width = "50vw";
+        this.updateTextLines(35, 15, 36, 68, 67, 13, 68, 65); // 更新文字位置
+
       } else if (screenWidth < 1024 && screenWidth > 768) {
         container.style.top = `${screenHeight * -0.08}px`;
         container.style.width = "600px";
+        clickCircle.style.top = "73%";
+        clickCircle.style.width = "55vw";
+        this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
+
       } else if (screenWidth == 768) {
         container.style.top = `${screenHeight * 0.06}px`;
         container.style.width = "490px";
+        clickCircle.style.top = "75%";
+        clickCircle.style.width = "50vw";
+        this.updateTextLines(35, 18, 33, 70, 67, 16, 69, 70); // 更新文字位置
+
       } else if (screenWidth < 768 && screenWidth > 480) {
         container.style.top = `${screenHeight * 0.02}px`;
         container.style.width = "350px";
+        clickCircle.style.top = "75%";
+        clickCircle.style.width = "50vw";
+        this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
+
       } else if (screenWidth <= 480 && screenWidth > 375) {
         container.style.top = `${screenHeight * 0.13}px`;
         container.style.width = "340px";
+        clickCircle.style.top = "70%";
+        clickCircle.style.width = "70vw";
+        this.updateTextLines(32, 8, 33, 68, 60, 8, 60, 70); // 更新文字位置
+
       } else if (screenWidth == 375) {
         container.style.top = `${screenHeight * 0.05}px`;
         container.style.width = "320px";
+        clickCircle.style.top = "74%";
+        clickCircle.style.width = "60vw";
+        this.updateTextLines(32, 8, 33, 67, 64, 5, 65, 65); // 更新文字位置
+
       } else {
         container.style.top = `${screenHeight * 0.11}px`;
         container.style.width = "300px";
+        clickCircle.style.top = "70%";
+        clickCircle.style.width = "65vw";
+        this.updateTextLines(32, 8, 30, 65, 60, 8, 60, 67); // 更新文字位置
       }
     },
-
+  
     // 加載資料夾中的所有圖片
     loadImages() {
       const requireContext = require.context(

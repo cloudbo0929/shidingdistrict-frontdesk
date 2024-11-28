@@ -15,6 +15,10 @@ html, body {
     transition: all 0.3s ease-in-out; /* 保留平滑過渡 */
   }
 
+  .text-div{
+    margin-right: 10px;
+  }
+
   .text-overlay {
     top: 20%;
     position: absolute;
@@ -32,6 +36,7 @@ html, body {
     color: #fff;
     opacity: 0;
     animation: fadeInUp 1s forwards;
+    text-decoration: underline;
   }
   
   @keyframes fadeInUp {
@@ -149,17 +154,26 @@ html, body {
     background-repeat: no-repeat; /* 禁止背景圖片重複 */
   }
   
-  /* 點擊區域 */
   .click-circle {
     position: absolute;
-    top: 67%; /* 圓圈的相對位置 */
+    top: 70%; /* 圓圈的相對位置 */
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 15vw; /* 寬度為背景寬度的 15% */
+    width: 12vw; /* 寬度為背景寬度的 15% */
     aspect-ratio: 1; /* 確保高度與寬度相等，保持正圓 */
-    border-radius: 50%;
     cursor: pointer;
-    background: rgba(0, 0, 0, 0); /* 可視化點擊範圍，測試時用 */
+  }
+  
+  .click-circle .click-image {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%; /* 圖片圓形效果 */
+    object-fit: cover; /* 確保圖片完整覆蓋點擊區域 */
+    transition: transform 0.3s ease; /* 平滑過渡效果 */
+  }
+  
+  .click-circle:hover .click-image {
+    transform: scale(1.02); /* 鼠標懸停時放大效果 */
   }
   
   
@@ -315,6 +329,16 @@ html, body {
       top: 73%;
       width: 55vw; /* 調整寬度 */
     }
+    .animated-text {
+      position: absolute;
+      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      animation: fadeInUp 1s forwards;
+      text-decoration: underline;
+    }
   }
   
   /* 手機 (最大寬度 768px) */
@@ -331,6 +355,16 @@ html, body {
       font-size: 14px; /* 調整字體大小 */
       padding: 15px; /* 減少內距 */
     }
+    .animated-text {
+      position: absolute;
+      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      animation: fadeInUp 1s forwards;
+      text-decoration: underline;
+    }
   }
   
   /* 小型手機 (最大寬度 480px) */
@@ -346,6 +380,16 @@ html, body {
     }
     .modal-content {
       font-size: 12px; /* 進一步調整字體大小 */
+    }
+    .animated-text {
+      position: absolute;
+      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      animation: fadeInUp 1s forwards;
+      text-decoration: underline;
     }
   }
   
@@ -364,6 +408,16 @@ html, body {
       font-size: 10px; /* 縮小字體大小，確保內容可讀 */
       padding: 10px; /* 減少內距，避免內容擠壓 */
     }
+    .animated-text {
+      position: absolute;
+      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      animation: fadeInUp 1s forwards;
+      text-decoration: underline;
+    }
   }
   @media screen and (max-width:400px) {
 
@@ -380,5 +434,15 @@ html, body {
     .modal-content {
       font-size: 10px; /* 縮小字體大小，確保內容可讀 */
       padding: 10px; /* 減少內距，避免內容擠壓 */
+    }
+    .animated-text {
+      position: absolute;
+      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      animation: fadeInUp 1s forwards;
+      text-decoration: underline;
     }
   }
