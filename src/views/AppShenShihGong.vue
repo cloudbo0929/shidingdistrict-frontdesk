@@ -1,29 +1,42 @@
 <template>
+  <!-- 彈出視窗 -->
+  <div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
+    <div class="modal-content" @click.stop>
+      <!-- 關閉按鈕 -->
+      <button class="close-button" @click="closeModal">
+        <i class="fas fa-times"></i>
+      </button>
+      <p class="modal-title">人生語錄 石在有靈</p>
+      <img class="modal-image" :src="selectedImage.src" alt="內容圖片" />
+      <p class="modal-text">了解更多，點擊前往解方</p>
+      <div class="button-container">
+        <a :href="selectedImage.link" target="_blank" class="action-button animated-button">前往網站</a>
+      </div>
+    </div>
+  </div>
   <div>
-    <!-- 添加固定比例和位置的晃動圖片 -->
-    <!-- <div class="image-container">
+    <div class="image-container swing-image-container">
       <img src="@/assets/images/title_sht.png" alt="晃動圖片" class="swing-image" />
-    </div> -->
-
+      <!-- 五角星效果 -->
+      <div class="star star-1"></div>
+      <div class="star star-2"></div>
+      <div class="star star-3"></div>
+    </div>
     <!-- 背景和彈窗功能 -->
     <div class="background">
       <!-- 點擊區域 -->
-      <div class="click-circle" @click="openModal"></div>
-
-      <!-- 彈出視窗 -->
-      <div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
-        <div class="modal-content" @click.stop>
-          <!-- 關閉按鈕 -->
-          <button class="close-button" @click="closeModal">
-            <i class="fas fa-times"></i>
-          </button>
-          <p class="modal-title">人生語錄 石在有靈</p>
-          <img class="modal-image" :src="selectedImage.src" alt="內容圖片" />
-          <p class="modal-text">了解更多，點擊前往解方</p>
-          <div class="button-container">
-            <a :href="selectedImage.link" target="_blank" class="action-button animated-button">前往網站</a>
-          </div>
-        </div>
+        <div class="text-overlay">
+    <p
+      class="animated-text"
+      v-for="(line, index) in textLines"
+      :key="index"
+      :style="{ top: line.top, left: line.left, animationDelay: `${index * 1}s` }"
+    >
+      {{ line.text }}
+    </p>
+  </div>
+  <div class="click-circle" @click="openModal">
+        <img src="@/assets/images/shenshi.png" alt="點擊圖片" class="click-image" />
       </div>
     </div>
   </div>
@@ -34,18 +47,109 @@
 
 
 <script>
+
 export default {
+  
   data() {
     return {
       isModalOpen: false,
       selectedImage: null, // 儲存隨機選中的圖片物件
       images: [],
+      textLines: [
+      { text: "幽默的方式", top: "32%", left: "8%" },
+      { text: "期待生活的挑戰", top: "30%", left: "70%" },
+      { text: "指點迷津新體驗", top: "60%", left: "8%" },
+      { text: "美食景點大推薦", top: "60%", left: "70%" }
+      ]    
     };
   },
   created() {
     this.loadImages(); // 在組件創建時加載圖片
   },
+  mounted() {
+    this.adjustImageContainer(); // 初始化時調整位置與大小
+    window.addEventListener("resize", this.adjustImageContainer); // 監聽螢幕尺寸變化
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.adjustImageContainer); // 清理監聽器
+  },
+
   methods: {
+    updateTextLines(top1, left1, top2, left2, top3, left3, top4, left4) {
+    this.textLines = [
+      { text: "幽默的方式", top: `${top1}%`, left: `${left1}%` },
+      { text: "期待生活的挑戰", top: `${top2}%`, left: `${left2}%` },
+      { text: "指點迷津新體驗", top: `${top3}%`, left: `${left3}%` },
+      { text: "美食景點大推薦", top: `${top4}%`, left: `${left4}%` },
+    ];
+  },
+
+    adjustImageContainer() {
+      const container = document.querySelector(".image-container");
+      const clickCircle = document.querySelector(".click-circle");
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
+
+      // 根據螢幕大小調整樣式
+      if (screenWidth > 1024) {
+        container.style.top = `${screenHeight * -0.2}px`;
+        container.style.width = "380px";
+        clickCircle.style.top = "75%";
+        clickCircle.style.width = "17vw";
+        this.updateTextLines(32, 38, 33, 55, 67, 38, 70, 55); // 更新文字位置
+
+      } else if (screenWidth == 1024 ) {
+        container.style.top = `${screenHeight * -0.05}px`;
+        container.style.width = "650px";
+        clickCircle.style.top = "75%";
+        clickCircle.style.width = "50vw";
+        this.updateTextLines(35, 15, 36, 68, 67, 13, 68, 65); // 更新文字位置
+
+      } else if (screenWidth < 1024 && screenWidth > 768) {
+        container.style.top = `${screenHeight * -0.08}px`;
+        container.style.width = "600px";
+        clickCircle.style.top = "73%";
+        clickCircle.style.width = "55vw";
+        this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
+
+      } else if (screenWidth == 768) {
+        container.style.top = `${screenHeight * 0.06}px`;
+        container.style.width = "490px";
+        clickCircle.style.top = "75%";
+        clickCircle.style.width = "50vw";
+        this.updateTextLines(35, 18, 33, 70, 67, 16, 69, 70); // 更新文字位置
+
+      } else if (screenWidth < 768 && screenWidth > 480) {
+        container.style.top = `${screenHeight * 0.02}px`;
+        container.style.width = "350px";
+        clickCircle.style.top = "75%";
+        clickCircle.style.width = "50vw";
+        this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
+
+      } else if (screenWidth <= 480 && screenWidth > 375) {
+        container.style.top = `${screenHeight * 0.13}px`;
+        container.style.width = "340px";
+        clickCircle.style.top = "70%";
+        clickCircle.style.width = "70vw";
+        this.updateTextLines(32, 8, 33, 68, 60, 8, 60, 70); // 更新文字位置
+
+      } else if (screenWidth == 375) {
+        container.style.top = `${screenHeight * 0.05}px`;
+        container.style.width = "320px";
+        clickCircle.style.top = "74%";
+        clickCircle.style.width = "60vw";
+        this.updateTextLines(32, 8, 33, 67, 64, 5, 65, 65); // 更新文字位置
+
+      } else {
+        container.style.top = `${screenHeight * 0.11}px`;
+        container.style.width = "300px";
+        clickCircle.style.top = "70%";
+        clickCircle.style.width = "65vw";
+        this.updateTextLines(32, 8, 30, 65, 60, 8, 60, 67); // 更新文字位置
+      }
+    },
+  
     // 加載資料夾中的所有圖片
     loadImages() {
       const requireContext = require.context(
@@ -121,6 +225,13 @@ export default {
         this.isModalOpen = false;
       }, 300); // 與 CSS 過渡時間對應
     },
+    mounted() {
+      setTimeout(() => {
+        const image = document.querySelector('.swing-image');
+        image.classList.add('swing-active'); // 為圖片添加動畫類名
+      }, 1000); // 延遲 1 秒
+    },
+
   },
 };
 </script>

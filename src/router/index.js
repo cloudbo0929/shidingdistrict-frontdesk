@@ -18,7 +18,7 @@ const routes = [
     component: AppHome,
     meta: {
       title: '石碇觀光發展協會首頁',
-      image: '/images/mascot.png',
+      image: 'images/mascot.png',
     },
   },
   {
@@ -76,7 +76,7 @@ const routes = [
     component: SpiritualPage,
     props: true,
     meta: {
-      title: '心靈小語 - 石碇觀光發展協會',
+      title: '深情石刻',
       image: '/images/mascot.png',
     },
   },
@@ -99,6 +99,10 @@ const routes = [
     path: '/ShenShiTemple',
     name: 'ShenShiTemple',
     component: ShenShihGong,
+    meta: {
+      title: '深情石刻',
+      image: '/images/mascot.png',
+    },
   },
 ];
 
@@ -108,7 +112,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title || '石碇觀光發展協會網站';
+  document.title = to.meta.title || '';
 
   let metaImage = document.querySelector('meta[property="og:image"]');
   if (!metaImage) {
