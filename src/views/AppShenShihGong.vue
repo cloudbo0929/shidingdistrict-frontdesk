@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-  <div>
+  <div class="background-div">
     <div class="image-container swing-image-container">
       <img src="@/assets/images/title_sht.png" alt="晃動圖片" class="swing-image" />
       <!-- 五角星效果 -->
@@ -93,51 +93,44 @@ export default {
 
       // 根據螢幕大小調整樣式
       if (screenWidth > 1024) {
-        container.style.top = `${screenHeight * -0.2}px`;
-        container.style.width = "380px";
-        clickCircle.style.top = "75%";
-        clickCircle.style.width = "17vw";
-        this.updateTextLines(32, 38, 33, 55, 67, 38, 70, 55); // 更新文字位置
-
-      } else if (screenWidth == 1024 ) {
-        container.style.top = `${screenHeight * -0.05}px`;
-        container.style.width = "650px";
-        clickCircle.style.top = "75%";
-        clickCircle.style.width = "50vw";
-        this.updateTextLines(35, 15, 36, 68, 67, 13, 68, 65); // 更新文字位置
-
-      } else if (screenWidth < 1024 && screenWidth > 768) {
-        container.style.top = `${screenHeight * -0.08}px`;
-        container.style.width = "600px";
+        container.style.top = `${screenHeight * 0.08}px`;
+        container.style.width = "420px";
         clickCircle.style.top = "73%";
-        clickCircle.style.width = "55vw";
-        this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
+        clickCircle.style.width = "25vw";
+        this.updateTextLines(32, 34, 33, 57, 67, 33, 68, 58); // 更新文字位置
+
+      } else if (screenWidth <= 1024 && screenWidth > 768) {
+        container.style.top = `${screenHeight * 0.05}px`;
+        container.style.width = "550px";
+        clickCircle.style.top = "72%";
+        clickCircle.style.width = "53vw";
+        this.updateTextLines(32, 12, 33, 67, 66, 10, 66, 68); // 更新文字位置
 
       } else if (screenWidth == 768) {
         container.style.top = `${screenHeight * 0.06}px`;
-        container.style.width = "490px";
+        container.style.width = "500px";
         clickCircle.style.top = "75%";
         clickCircle.style.width = "50vw";
-        this.updateTextLines(35, 18, 33, 70, 67, 16, 69, 70); // 更新文字位置
+        this.updateTextLines(35, 14, 33, 65, 67, 14, 69, 65); // 更新文字位置
 
       } else if (screenWidth < 768 && screenWidth > 480) {
-        container.style.top = `${screenHeight * 0.02}px`;
+        container.style.top = `${screenHeight * 0.06}px`;
         container.style.width = "350px";
         clickCircle.style.top = "75%";
         clickCircle.style.width = "50vw";
         this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
 
       } else if (screenWidth <= 480 && screenWidth > 375) {
-        container.style.top = `${screenHeight * 0.13}px`;
-        container.style.width = "340px";
-        clickCircle.style.top = "70%";
+        container.style.top = `${screenHeight * 0.16}px`;
+        container.style.width = "335px";
+        clickCircle.style.top = "68%";
         clickCircle.style.width = "70vw";
-        this.updateTextLines(32, 8, 33, 68, 60, 8, 60, 70); // 更新文字位置
+        this.updateTextLines(32, 8, 31, 68, 60, 4, 60, 70); // 更新文字位置
 
       } else if (screenWidth == 375) {
-        container.style.top = `${screenHeight * 0.05}px`;
+        container.style.top = `${screenHeight * 0.07}px`;
         container.style.width = "320px";
-        clickCircle.style.top = "74%";
+        clickCircle.style.top = "72%";
         clickCircle.style.width = "60vw";
         this.updateTextLines(32, 8, 33, 67, 64, 5, 65, 65); // 更新文字位置
 

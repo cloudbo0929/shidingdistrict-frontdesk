@@ -5,18 +5,27 @@ html, body {
     height: 100%;
     overflow: hidden; /* 禁止出現滾動條 */
   }
+
+  img {
+    max-width: 100%; /* 確保圖片不超出父容器寬度 */
+    height: auto;    /* 高度自動調整，保持比例 */
+  }
   
   .image-container {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    width: auto;/* 預設寬度 */
+    top: 7%; /* 默認 top */
     transition: all 0.3s ease-in-out; /* 保留平滑過渡 */
   }
 
-  .text-div{
-    margin-right: 10px;
+
+  /* 圖片 */
+  .swing-image {
+    width: 100%;
+    height: auto;
+    animation: slide-in 1s ease-out, swing 3s infinite ease-in-out;
   }
 
   .text-overlay {
@@ -51,14 +60,11 @@ html, body {
   }
 
 
-/* 圖片 */
-.swing-image {
-  width: 100%;
-  height: auto;
-  animation: slide-in 1s ease-out, swing 3s infinite ease-in-out;
-    top: 60%; /* 預設值 */
-
-}
+  .swing-image-container {
+    position: fixed; /* 固定在螢幕上 */
+    transform: translateX(-50%); /* 將容器的中心對齊螢幕的 50% */
+    z-index: 1000; /* 保證元素在前面顯示 */
+  }
 
 /* 定義滑入動畫 */
 @keyframes slide-in {
@@ -84,11 +90,6 @@ html, body {
   }
 }
 
-
-/* 星星容器 */
-.swing-image-container {
-  position: relative;
-}
 
   .star {
     position: absolute;
@@ -140,8 +141,7 @@ html, body {
     left: 80%;
     animation-delay: 0.6s;
   }
-  
-  
+
   .background {
     position: fixed; /* 確保背景固定在視窗內 */
     top: 0;
@@ -152,15 +152,14 @@ html, body {
     background-size: cover; /* 確保背景圖片覆蓋整個區域 */
     background-position: center;
     background-repeat: no-repeat; /* 禁止背景圖片重複 */
+    aspect-ratio: 16 / 9; /* 確保長寬比例 */
   }
   
   .click-circle {
-    position: absolute;
+    position: fixed; /* 固定在螢幕上 */
     top: 70%; /* 圓圈的相對位置 */
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 12vw; /* 寬度為背景寬度的 15% */
-    aspect-ratio: 1; /* 確保高度與寬度相等，保持正圓 */
     cursor: pointer;
   }
   
@@ -180,6 +179,7 @@ html, body {
   /* 修改彈出視窗的背景層 */
   .modal-overlay {
     position: fixed;
+    flex-wrap: wrap;
     top: 0;
     left: 0;
     width: 100%;
@@ -298,41 +298,23 @@ html, body {
     transform: scale(1.1); /* 稍微放大 */
     transition: all 0.2s; /* 過渡效果 */
   }
-  
-  
-  /* 響應式設計 */
-  @media screen and (min-width: 1025px) {
 
+  @media screen and (min-width: 1200px) {
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
     }
-  
-    .click-circle {
-      top: 73%; /* 上移圓圈位置 */
-      width: 20vw; /* 更小的寬度，適配大屏幕 */
+    .click-circle .click-image {
+      width: 85%;
+      height:85%;
+      object-fit: cover; /* 確保圖片完整覆蓋點擊區域 */
+      transition: transform 0.3s ease; /* 平滑過渡效果 */
     }
-  
-    .modal-content {
-      max-width: 600px; /* 更大的彈窗寬度 */
-      padding: 30px; /* 增加內邊距 */
-      font-size: 18px; /* 提高字體大小 */
-    }
-  }
-  
-  @media screen and (max-width: 1024px) {
-      .background {
-      width: 100vw; /* 占滿視窗寬度 */
-      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-    .click-circle {
-      top: 73%;
-      width: 55vw; /* 調整寬度 */
-    }
+
     .animated-text {
       position: absolute;
       transform: translate(-50%, -50%); /* 使文字以中心點定位 */
-      font-size: 18px;
+      font-size: 14px;
       font-weight: bold;
       color: #fff;
       opacity: 0;
@@ -340,15 +322,56 @@ html, body {
       text-decoration: underline;
     }
   }
-  
-  /* 手機 (最大寬度 768px) */
-  @media screen and (max-width: 768px) {
+
+    /* 桌機，中等寬度，寬度大於等於 992px 且小於 1200px */
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
+    .background {
+      width: 100vw; /* 占滿視窗寬度 */
+      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
+    }
+    /* 圖片 */
+    .swing-image {
+      width: 100%;
+      height: auto;
+      top: 30%;
+      animation: slide-in 1s ease-out, swing 3s infinite ease-in-out;
+    }
+    .animated-text {
+      position: absolute;
+      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      animation: fadeInUp 1s forwards;
+      text-decoration: underline;
+    }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    .background {
+      width: 100vw; /* 占滿視窗寬度 */
+      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
+    }
+    .animated-text {
+      position: absolute;
+      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      animation: fadeInUp 1s forwards;
+      text-decoration: underline;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
     .background {
       width: 100vw; /* 占滿視窗寬度 */
       background-size: contain; /* 確保背景圖片覆蓋整個區域 */
     }
     .click-circle {
-      top: 73%;
+      top: 70%;
       width: 55vw; /* 手機上圈圈稍微縮小 */
     }
     .modal-content {
@@ -366,83 +389,6 @@ html, body {
       text-decoration: underline;
     }
   }
-  
-  /* 小型手機 (最大寬度 480px) */
-  @media screen and (max-width: 480px) {
-    .background {
-      width: 100vw; /* 占滿視窗寬度 */
-      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-  
-    .click-circle {
-      top: 75%;
-      width: 65vw; /* 更小屏幕圈圈大小 */
-    }
-    .modal-content {
-      font-size: 12px; /* 進一步調整字體大小 */
-    }
-    .animated-text {
-      position: absolute;
-      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
-      font-size: 12px;
-      font-weight: bold;
-      color: #fff;
-      opacity: 0;
-      animation: fadeInUp 1s forwards;
-      text-decoration: underline;
-    }
-  }
-  
-  @media screen and (max-width:440px) {
-    .background {
-      width: 100vw; /* 占滿視窗寬度 */
-      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-  
-    .click-circle {
-      top: 70%; /* 上移圈圈位置，防止太靠下 */
-      width: 70vw; /* 調整圈圈寬度，適配小屏幕 */
-    }
-  
-    .modal-content {
-      font-size: 10px; /* 縮小字體大小，確保內容可讀 */
-      padding: 10px; /* 減少內距，避免內容擠壓 */
-    }
-    .animated-text {
-      position: absolute;
-      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
-      font-size: 12px;
-      font-weight: bold;
-      color: #fff;
-      opacity: 0;
-      animation: fadeInUp 1s forwards;
-      text-decoration: underline;
-    }
-  }
-  @media screen and (max-width:400px) {
 
-    .background {
-      width: 100vw; /* 占滿視窗寬度 */
-      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
   
-    .click-circle {
-      top: 65%; /* 上移圈圈位置，防止太靠下 */
-      width: 65vw; /* 調整圈圈寬度，適配小屏幕 */
-    }
   
-    .modal-content {
-      font-size: 10px; /* 縮小字體大小，確保內容可讀 */
-      padding: 10px; /* 減少內距，避免內容擠壓 */
-    }
-    .animated-text {
-      position: absolute;
-      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
-      font-size: 12px;
-      font-weight: bold;
-      color: #fff;
-      opacity: 0;
-      animation: fadeInUp 1s forwards;
-      text-decoration: underline;
-    }
-  }
