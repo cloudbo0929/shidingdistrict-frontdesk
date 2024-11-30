@@ -14,30 +14,29 @@
       </div>
     </div>
   </div>
-  <div class="background-div">
-    <div class="image-container swing-image-container">
+
+    <!-- 背景和彈窗功能 -->
+    <div class="background">
+      <div class="image-container swing-image-container">
       <img src="@/assets/images/title_sht.png" alt="晃動圖片" class="swing-image" />
       <!-- 五角星效果 -->
       <div class="star star-1"></div>
       <div class="star star-2"></div>
       <div class="star star-3"></div>
     </div>
-    <!-- 背景和彈窗功能 -->
-    <div class="background">
-      <!-- 點擊區域 -->
-        <div class="text-overlay">
-    <p
-      class="animated-text"
-      v-for="(line, index) in textLines"
-      :key="index"
-      :style="{ top: line.top, left: line.left, animationDelay: `${index * 1}s` }"
-    >
-      {{ line.text }}
-    </p>
-  </div>
-  <div class="click-circle" @click="openModal">
+
+      <div class="click-circle" @click="openModal">
         <img src="@/assets/images/shenshi.png" alt="點擊圖片" class="click-image" />
       </div>
+      <div class="text-overlay">
+        <div
+        class="animated-text"
+            v-for="(line, index) in textLines"
+            :key="index"
+            :style="{ top: line.top, left: line.left }"
+          >
+          {{ line.text }}
+        </div>
     </div>
   </div>
 </template>
@@ -56,91 +55,175 @@ export default {
       selectedImage: null, // 儲存隨機選中的圖片物件
       images: [],
       textLines: [
-      { text: "幽默的方式", top: "32%", left: "8%" },
-      { text: "期待生活的挑戰", top: "30%", left: "70%" },
-      { text: "指點迷津新體驗", top: "60%", left: "8%" },
-      { text: "美食景點大推薦", top: "60%", left: "70%" }
-      ]    
+      { text: "幽默的方式", top: "52%", left: "8%" },
+      { text: "期待生活的挑戰", top: "53%", left: "65%" },
+      { text: "指點迷津新體驗", top: "80%", left: "8%" },
+      { text: "美食景點大推薦", top: "80%", left: "62%" },
+    ],
     };
   },
   created() {
     this.loadImages(); // 在組件創建時加載圖片
   },
   mounted() {
-    this.adjustImageContainer(); // 初始化時調整位置與大小
-    window.addEventListener("resize", this.adjustImageContainer); // 監聽螢幕尺寸變化
+    this.updateTextLinePositions(); // 初始化時更新文字位置
+    window.addEventListener("resize", this.adjustTextLines); // 監聽螢幕尺寸變化
   },
   beforeUnmount() {
-    window.removeEventListener("resize", this.adjustImageContainer); // 清理監聽器
+    window.removeEventListener("resize", this.adjustTextLines); // 清理事件監聽  },
   },
-
   methods: {
-    updateTextLines(top1, left1, top2, left2, top3, left3, top4, left4) {
+
+
+    updateTextLinePositions() {
+  const container = document.querySelector('.background');
+  if (!container) return;
+
+  const containerWidth = container.offsetWidth;
+  const containerHeight = container.offsetHeight;
+  const screenWidth = window.innerWidth;
+
+  // 限制文字位置的範圍
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+  if (screenWidth >= 1200) {
+    // 桌機版配置
     this.textLines = [
-      { text: "幽默的方式", top: `${top1}%`, left: `${left1}%` },
-      { text: "期待生活的挑戰", top: `${top2}%`, left: `${left2}%` },
-      { text: "指點迷津新體驗", top: `${top3}%`, left: `${left3}%` },
-      { text: "美食景點大推薦", top: `${top4}%`, left: `${left4}%` },
+      {
+        text: "幽默的方式",
+        top: `${clamp(containerHeight * 0.52, 50, containerHeight - 50)}px`,
+        left: `${clamp(containerWidth * 0.37, 50, containerWidth - 50)}px`,
+      },
+      {
+        text: "期待生活的挑戰",
+        top: `${clamp(containerHeight * 0.53, 50, containerHeight - 50)}px`,
+        left: `${clamp(containerWidth * 0.54, 50, containerWidth - 50)}px`,
+      },
+      {
+        text: "指點迷津新體驗",
+        top: `${clamp(containerHeight * 0.9, 50, containerHeight - 50)}px`,
+        left: `${clamp(containerWidth * 0.38, 50, containerWidth - 50)}px`,
+      },
+      {
+        text: "美食景點大推薦",
+        top: `${clamp(containerHeight * 0.88, 50, containerHeight - 50)}px`,
+        left: `${clamp(containerWidth * 0.55, 50, containerWidth - 50)}px`,
+      },
     ];
-  },
+  } else if (screenWidth >= 768 && screenWidth < 1200) {
+    // 平板版配置
+    this.textLines = [
+      {
+        text: "幽默的方式",
+        top: `${clamp(containerHeight * 0.55, 30, containerHeight - 30)}px`,
+        left: `${clamp(containerWidth * 0.15, 30, containerWidth - 30)}px`,
+      },
+      {
+        text: "期待生活的挑戰",
+        top: `${clamp(containerHeight * 0.53, 30, containerHeight - 30)}px`,
+        left: `${clamp(containerWidth * 0.65, 30, containerWidth - 30)}px`,
+      },
+      {
+        text: "指點迷津新體驗",
+        top: `${clamp(containerHeight * 0.88, 30, containerHeight - 30)}px`,
+        left: `${clamp(containerWidth * 0.13, 30, containerWidth - 30)}px`,
+      },
+      {
+        text: "美食景點大推薦",
+        top: `${clamp(containerHeight * 0.90, 30, containerHeight - 30)}px`,
+        left: `${clamp(containerWidth * 0.66, 30, containerWidth - 30)}px`,
+      },
+    ];
+  } else {
+    // 手機版配置
+    this.textLines = [
+      {
+        text: "幽默的方式",
+        top: `${clamp(containerHeight * 0.53, 20, containerHeight - 20)}px`,
+        left: `${clamp(containerWidth * 0.10, 20, containerWidth - 20)}px`,
+      },
+      {
+        text: "期待生活的挑戰",
+        top: `${clamp(containerHeight * 0.52, 20, containerHeight - 20)}px`,
+        left: `${clamp(containerWidth * 0.6, 20, containerWidth - 20)}px`,
+      },
+      {
+        text: "指點迷津新體驗",
+        top: `${clamp(containerHeight * 0.8, 20, containerHeight - 20)}px`,
+        left: `${clamp(containerWidth * 0.09, 20, containerWidth - 20)}px`,
+      },
+      {
+        text: "美食景點大推薦",
+        top: `${clamp(containerHeight * 0.82, 20, containerHeight - 20)}px`,
+        left: `${clamp(containerWidth * 0.6, 20, containerWidth - 20)}px`,
+      },
+    ];
+  }
+},
 
-    adjustImageContainer() {
-      const container = document.querySelector(".image-container");
-      const clickCircle = document.querySelector(".click-circle");
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-      this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
+    // 初始化和監聽尺寸變化
+    handleResize() {
+      this.updateTextLinePositions(); // 更新文字位置
+    },
 
+     adjustImageContainer() {
+      // const container = document.querySelector(".image-container");
+      // const clickCircle = document.querySelector(".click-circle");
+      // const screenWidth = window.innerWidth;
+      // const screenHeight = window.innerHeight;
       // 根據螢幕大小調整樣式
-      if (screenWidth > 1024) {
-        container.style.top = `${screenHeight * 0.08}px`;
-        container.style.width = "420px";
-        clickCircle.style.top = "73%";
-        clickCircle.style.width = "25vw";
-        this.updateTextLines(32, 34, 33, 57, 67, 33, 68, 58); // 更新文字位置
+      // if (screenWidth > 1024) {
+      //   document.documentElement.style.setProperty('--image-top', `${screenHeight * 0.08}px`);
+      //   document.documentElement.style.setProperty('--click-circle-top', '73%');
+      //   container.style.width = "420px";
+      //   clickCircle.style.top = "73%";
+      //   clickCircle.style.width = "25vw";
+      //   this.updateTextLines(32, 34, 33, 57, 67, 33, 68, 58); // 更新文字位置
 
-      } else if (screenWidth <= 1024 && screenWidth > 768) {
-        container.style.top = `${screenHeight * 0.05}px`;
-        container.style.width = "550px";
-        clickCircle.style.top = "72%";
-        clickCircle.style.width = "53vw";
-        this.updateTextLines(32, 12, 33, 67, 66, 10, 66, 68); // 更新文字位置
+      // } else if (screenWidth <= 1024 && screenWidth > 768) {
+      //   document.documentElement.style.setProperty('--image-top', `${screenHeight * 0.05}px`);
+      //   document.documentElement.style.setProperty('--click-circle-top', '72%');
+      //   container.style.width = "550px";
+      //   clickCircle.style.top = "72%";
+      //   clickCircle.style.width = "53vw";
+      //   this.updateTextLines(32, 12, 33, 67, 66, 10, 66, 68); // 更新文字位置
 
-      } else if (screenWidth == 768) {
-        container.style.top = `${screenHeight * 0.06}px`;
-        container.style.width = "500px";
-        clickCircle.style.top = "75%";
-        clickCircle.style.width = "50vw";
-        this.updateTextLines(35, 14, 33, 65, 67, 14, 69, 65); // 更新文字位置
+      // } else if (screenWidth == 768) {
+      //   container.style.top = `${screenHeight * 0.06}px`;
+      //   container.style.width = "500px";
+      //   clickCircle.style.top = "75%";
+      //   clickCircle.style.width = "50vw";
+      //   this.updateTextLines(35, 14, 33, 65, 67, 14, 69, 65); // 更新文字位置
 
-      } else if (screenWidth < 768 && screenWidth > 480) {
-        container.style.top = `${screenHeight * 0.06}px`;
-        container.style.width = "350px";
-        clickCircle.style.top = "75%";
-        clickCircle.style.width = "50vw";
-        this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
+      // } else if (screenWidth < 768 && screenWidth > 480) {
+      //   document.documentElement.style.setProperty('--image-top', `${screenHeight * 0.06}px`);
+      //   document.documentElement.style.setProperty('--click-circle-top', '75%');
+      //   container.style.width = "350px";
+      //   clickCircle.style.top = "75%";
+      //   clickCircle.style.width = "50vw";
+      //   this.updateTextLines(32, 8, 30, 70, 60, 8, 60, 70); // 更新文字位置
 
-      } else if (screenWidth <= 480 && screenWidth > 375) {
-        container.style.top = `${screenHeight * 0.16}px`;
-        container.style.width = "335px";
-        clickCircle.style.top = "68%";
-        clickCircle.style.width = "70vw";
-        this.updateTextLines(32, 8, 31, 68, 60, 4, 60, 70); // 更新文字位置
+      // } else if (screenWidth <= 480 && screenWidth > 375) {
+      //   container.style.top = `${screenHeight * 0.16}px`;
+      //   container.style.width = "335px";
+      //   clickCircle.style.top = "68%";
+      //   clickCircle.style.width = "70vw";
+      //   this.updateTextLines(32, 8, 31, 68, 60, 4, 60, 70); // 更新文字位置
 
-      } else if (screenWidth == 375) {
-        container.style.top = `${screenHeight * 0.07}px`;
-        container.style.width = "320px";
-        clickCircle.style.top = "72%";
-        clickCircle.style.width = "60vw";
-        this.updateTextLines(32, 8, 33, 67, 64, 5, 65, 65); // 更新文字位置
+      // } else if (screenWidth == 375) {
+      //   container.style.top = `${screenHeight * 0.07}px`;
+      //   container.style.width = "320px";
+      //   clickCircle.style.top = "72%";
+      //   clickCircle.style.width = "60vw";
+      //   this.updateTextLines(32, 8, 33, 67, 64, 5, 65, 65); // 更新文字位置
 
-      } else {
-        container.style.top = `${screenHeight * 0.11}px`;
-        container.style.width = "300px";
-        clickCircle.style.top = "70%";
-        clickCircle.style.width = "65vw";
-        this.updateTextLines(32, 8, 30, 65, 60, 8, 60, 67); // 更新文字位置
-      }
+      // } else {
+      //   container.style.top = `${screenHeight * 0.11}px`;
+      //   container.style.width = "300px";
+      //   clickCircle.style.top = "70%";
+      //   clickCircle.style.width = "65vw";
+      //   this.updateTextLines(32, 8, 30, 65, 60, 8, 60, 67); // 更新文字位置
+      // }
     },
   
     // 加載資料夾中的所有圖片
