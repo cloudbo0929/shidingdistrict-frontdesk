@@ -1,462 +1,398 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; /* 確保內外邊距不影響元素的大小 */
+.bg-container {
+  width: 100%; /* 占滿父容器寬度 */
+  height: auto; /* 根據寬度自適應高度 */
+}
+/* 修改彈出視窗的背景層 */
+.modal-overlay {
+  position: fixed;
+  flex-wrap: wrap;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  z-index: 1001 !important;
+  align-items: center;
+  opacity: 0; /* 初始透明 */
+  visibility: hidden; /* 初始不可見 */
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* 過渡效果 */
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden; /* 禁止出現滾動條 */
-  }
+/* 當視窗打開時的狀態 */
+.modal-overlay.open {
+  opacity: 1;
+  visibility: visible; /* 顯示視窗 */
+}
 
-  img {
-    max-width: 100%; /* 確保圖片不超出父容器寬度 */
-    height: auto;    /* 高度自動調整，保持比例 */
-  }
-  
-  .image-container {
-    position: fixed;
-    height: auto;
-    width: clamp(300px, 30vw, 300px); /* 動態寬度 */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    top: clamp(10vh, 10%, 15vh);
-    transition: all 0.3s ease-in-out; /* 保留平滑過渡 */
-  }
+/* 修改彈出視窗的內容 */
+.modal-content {
+  position: relative;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  transform: scale(0.8); /* 初始縮小 */
+  opacity: 0; /* 初始透明 */
+  transition: all 0.3s ease-in-out; /* 過渡效果 */
+}
 
+/* 當視窗打開時，內容放大並顯示 */
+.modal-overlay.open .modal-content {
+  transform: scale(1); /* 還原大小 */
+  opacity: 1; /* 完全可見 */
+}
 
-  /* 圖片 */
-  .swing-image {
-    margin: 0 auto; /* 水平居中，無多餘邊距 */
-    width: 100%;
-    height: auto;
-    animation: slide-in 1s ease-out, swing 3s infinite ease-in-out;
-  }
+.modal-title {
+  font-size: 20px;
+  font-weight: bold; /* 加粗 */
+  margin-bottom: 20px;
+  margin-bottom: 15px; /* 與下方內容間距 */
+  color: #6b3e23; /* 字體顏色 */
+  text-align: center; /* 文字居中 */
+}
 
-  .text-overlay {
-    top: 0;
-    position: absolute; /* 絕對定位，參考父容器 */
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* 防止文字干擾點擊 */
-    overflow: hidden; /* 防止溢出 */
-    z-index: 1000; /* 確保文字在前 */
-  }
-  
-  .animated-text {
-    position: absolute;
-    transform: translate(-50%, -50%); /* 使文字以中心點定位 */
-    font-size: clamp(10px, 1.5vw, 16px);
-    font-weight: bold;
-    color: #fff;
-    opacity: 0;
-    animation: fadeInUp 1s forwards;
-    opacity: 1; /* 確保文字顯示 */
-    text-decoration: underline;
-    white-space: nowrap; /* 避免文字換行 */
-    padding: 5px 10px;
-  }
+.modal-image {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: contain;
+  margin: 0 auto 10px;
+  border-radius: 8px;
+}
 
-  .background {
-    position: fixed; /* 確保背景固定在視窗內 */
-    display: flex;
-    top: 0;
-    left: 0;
-    width: 100vw; /* 占滿視窗寬度 */
-    height: calc(var(--vh, 1vh) * 100);
-    background-image: url('@/assets/images/SHGbackground.png'); /* 替換為實際圖片路徑 */
-    background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    background-position: center;
-    background-repeat: no-repeat; /* 禁止背景圖片重複 */
-    overflow: hidden; /* 確保內容不超出背景 */
-  }
+.modal-text {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
 
-  
-  .click-circle {
-    position: fixed; /* 固定在螢幕上 */
-    top: clamp(60%, 70%, 75%); /* 動態調整圈圈的垂直位置 */
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    width: clamp(50px, 30vw, 250px); /* 寬度在最小和最大值之間調整 */
-  }
-  
-  .click-circle .click-image {
-    width: calc(100% - 20px); /* 保持內邊距，避免固定寬度 */
-    border-radius: 50%; /* 圖片圓形效果 */
-    object-fit: cover; /* 確保圖片完整覆蓋點擊區域 */
-    transition: transform 0.3s ease; /* 平滑過渡效果 */
-  }
-  
-  .click-circle:hover .click-image {
-    transform: scale(1.02); /* 鼠標懸停時放大效果 */
-  }
+.animated-button {
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #64be94;
+  color: white;
+  text-decoration: none;
+  opacity: 0; /* 初始不可見 */
+  transform: translateY(20px); /* 往下偏移 */
+  transition: all 0.5s ease-in-out; /* 過渡效果 */
+  animation: button-fade-in 1s ease-out forwards; /* 動畫觸發 */
+}
 
-  
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-
-  .swing-image-container {
-    position: fixed; /* 固定在螢幕上 */
-    transform: translateX(-50%); /* 將容器的中心對齊螢幕的 50% */
-    z-index: 1000; /* 保證元素在前面顯示 */
-  }
-
-/* 定義滑入動畫 */
-@keyframes slide-in {
+@keyframes button-fade-in {
   0% {
-    transform: translateY(-100px); /* 從上方滑入 */
+    opacity: 0;
+    transform: translateY(20px); /* 往下偏移 */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* 復原位置 */
+  }
+}
+
+.animated-button:hover {
+  background-color: #42795f; /* 鼠標懸停效果 */
+  transform: scale(1.1); /* 放大效果 */
+}
+
+.close-button {
+  position: absolute; /* 絕對定位 */
+  top: 10px; /* 距離彈出視窗頂部的距離 */
+  right: 10px; /* 距離彈出視窗右邊的距離 */
+  background: none; /* 無背景 */
+  border: none; /* 無邊框 */
+  font-size: 18px; /* 圖標大小 */
+  color: #333; /* 圖標顏色 */
+  cursor: pointer; /* 滑鼠移上去時顯示為指針 */
+}
+
+.close-button:hover {
+  color: #f44336; /* 滑鼠懸停時的顏色 */
+  transform: scale(1.1); /* 稍微放大 */
+  transition: all 0.2s; /* 過渡效果 */
+}
+
+.click-blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent; /* 透明背景 */
+  z-index: 1000; /* 确保遮罩层在最上方 */
+}
+
+
+
+.click-svg {
+  position: relative;
+  opacity: 0; /* 初始透明度 */
+  animation: stamp-appear 3s ease-out forwards, pulse 2s infinite; /* 盖印+延迟循环 */
+  animation-delay: 7s;
+  transform-origin: center;
+  cursor: pointer;
+}
+
+@keyframes stamp-appear {
+  0% {
     opacity: 0;
   }
   100% {
-    transform: translateY(0); /* 回到初始位置 */
     opacity: 1;
   }
 }
 
-/* 定義星星閃耀效果 */
-@keyframes star-twinkle {
+@keyframes pulse {
   0%, 100% {
-    opacity: 0;
-    transform: scale(0.5);
+    transform: scale(0.95);
   }
   50% {
-    opacity: 1;
-    transform: scale(1);
+    transform: scale(1); /* 放大 */
   }
 }
 
+.click-svg.clicked {
+  animation: click-effect 0.5s ease-out;
+  animation-delay: 0s;
+}
 
-  .star {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: transparent; /* 背景透明，主要靠邊框 */
-    clip-path: polygon(
-      50% 0%,
-      61% 35%,
-      98% 35%,
-      68% 57%,
-      79% 91%,
-      50% 70%,
-      21% 91%,
-      32% 57%,
-      2% 35%,
-      39% 35%
-    ); /* 五角星形狀 */
-    background-color: rgb(255, 255, 255);
+@keyframes click-effect {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.1);
     opacity: 0;
-    animation: star-twinkle 2s infinite ease-in-out;
+    
   }
+}
 
-  /* 星星閃耀動畫 */
-  @keyframes star-twinkle {
-    0%, 100% {
-      opacity: 0;
-      transform: scale(0.5) rotate(0deg);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.2) rotate(20deg); /* 放大和旋轉 */
-    }
-  }
+/* 基本樣式 */
+.step-1,
+.step-2,
+.step-3,
+.step-4 {
+  position: relative;
+  opacity: 0; /* 初始透明度 */
+  transform: translateY(-50px) scale(1.5); /* 初始位置：向上偏移 */
+  animation: fade-slide-in 2s ease-out forwards; /* 動畫 */
+}
 
-  /* 星星位置調整 */
-  .star-1 {
-    top: 50%;
-    left: 20%;
-    animation-delay: 0.2s;
-  }
-  .star-2 {
-    top: 30%;
-    left: 50%;
-    animation-delay: 0.4s;
-  }
-  .star-3 {
-    top: 70%;
-    left: 80%;
-    animation-delay: 0.6s;
-  }
+/* 個別延遲設定 */
+.step-1 {
+  animation-delay: 2s; /* 立即播放 */
+}
 
+.step-2 {
+  animation-delay: 3s; /* 延遲2秒，等待 .step-1 播放完成 */
+}
 
-  
-  
-  /* 修改彈出視窗的背景層 */
-  .modal-overlay {
-    position: fixed;
-    flex-wrap: wrap;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    z-index: 1001 !important;
-    align-items: center;
-    opacity: 0; /* 初始透明 */
-    visibility: hidden; /* 初始不可見 */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* 過渡效果 */
+.step-3 {
+  animation-delay: 4s; /* 延遲4秒，等待 .step-2 播放完成 */
+}
+
+.step-4 {
+  animation-delay: 5s; /* 延遲6秒，等待 .step-3 播放完成 */
+}
+
+/* 動畫定義 */
+@keyframes fade-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px); /* 開始位置：向上偏移 */
   }
-  
-  /* 當視窗打開時的狀態 */
-  .modal-overlay.open {
+  100% {
     opacity: 1;
-    visibility: visible; /* 顯示視窗 */
+    transform: translateY(0); /* 結束位置：原始位置 */
   }
-  
-  /* 修改彈出視窗的內容 */
-  .modal-content {
-    position: relative;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
-    transform: scale(0.8); /* 初始縮小 */
-    opacity: 0; /* 初始透明 */
-    transition: all 0.3s ease-in-out; /* 過渡效果 */
-  
-  
+}
+
+.star-svg {
+  fill: white; /* 星形顏色 */
+  animation: rotate-scale 2s infinite, blink 2s infinite;
+}
+
+/* 星形個別定位 */
+.star-svg-1 {
+  transform-origin: 513.7px 323.03px;
+}
+
+.star-svg-2 {
+  transform-origin: 192.7px 397.03px;
+}
+
+.star-svg-3 {
+  transform-origin: 654.7px 495.03px;
+}
+
+/* 標題動畫 */
+.title-svg {
+  fill: white;
+  opacity: 0; /* 初始透明度 */
+  animation: float-in 2s ease-out forwards;
+}
+
+/* 動畫效果 */
+
+/* 浮入動畫 */
+@keyframes float-in {
+  0% {
+    transform: translateY(-100px); /* 從上方移入 */
+    opacity: 0; /* 完全透明 */
   }
-  
-  /* 當視窗打開時，內容放大並顯示 */
-  .modal-overlay.open .modal-content {
-    transform: scale(1); /* 還原大小 */
+  100% {
+    transform: translateY(0); /* 到達原本位置 */
     opacity: 1; /* 完全可見 */
   }
+}
 
-  
-  .modal-title{
-    font-size: 20px;
-    font-weight: bold; /* 加粗 */
-    margin-bottom: 20px;
-    margin-bottom: 15px; /* 與下方內容間距 */
-    color: #6B3E23; /* 字體顏色 */
-    text-align: center; /* 文字居中 */
+/* 旋轉與縮放動畫 */
+@keyframes rotate-scale {
+  0%, 100% {
+    transform: rotate(0deg) scale(0.5);
   }
-  
-  
-  .modal-image {
-    width: 100%;
-    height: auto; 
-    max-width: 300px;
-    max-height: 300px;
-    object-fit: contain; 
-    margin: 0 auto 10px; 
-    border-radius: 8px;
+  50% {
+    transform: rotate(0.5deg) scale(0.8);
   }
-  
-  .modal-text {
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-  
-  .animated-button {
-    display: inline-block;
-    padding: 10px 15px;
-    font-size: 14px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #64BE94;
-    color: white;
-    text-decoration: none;
-    opacity: 0; /* 初始不可見 */
-    transform: translateY(20px); /* 往下偏移 */
-    transition: all 0.5s ease-in-out; /* 過渡效果 */
-    animation: button-fade-in 1s ease-out forwards; /* 動畫觸發 */
-  }
-  
-  @keyframes button-fade-in {
-    0% {
-      opacity: 0;
-      transform: translateY(20px); /* 往下偏移 */
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0); /* 復原位置 */
-    }
-  }
-  
-  .animated-button:hover {
-    background-color: #42795f; /* 鼠標懸停效果 */
-    transform: scale(1.1); /* 放大效果 */
-  }
-  
-  .close-button {
-    position: absolute; /* 絕對定位 */
-    top: 10px; /* 距離彈出視窗頂部的距離 */
-    right: 10px; /* 距離彈出視窗右邊的距離 */
-    background: none; /* 無背景 */
-    border: none; /* 無邊框 */
-    font-size: 18px; /* 圖標大小 */
-    color: #333; /* 圖標顏色 */
-    cursor: pointer; /* 滑鼠移上去時顯示為指針 */
-  }
-  
-  .close-button:hover {
-    color: #f44336; /* 滑鼠懸停時的顏色 */
-    transform: scale(1.1); /* 稍微放大 */
-    transition: all 0.2s; /* 過渡效果 */
-  }
+}
 
-  @media screen and (min-width: 1200px) {
-    .background {
-      width: 100vw; /* 占滿視窗寬度 */
-      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-    .click-circle {
-      top: 73%;
-      width: clamp(50px, 35vw, 280px); /* 寬度在最小和最大值之間調整 */
-    }
-
-    .image-container {
-      position: fixed;
-      height: auto;
-      width: 45vh; /* 動態寬度 */
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      top: var(--image-top, 8%);
-      transition: all 0.3s ease-in-out; /* 保留平滑過渡 */
-    }
-    .animated-text {
-      position: absolute;
-      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
-      font-size: 12px;
-      font-weight: bold;
-      color: #fff;
-      opacity: 0;
-      animation: fadeInUp 1s forwards;
-      text-decoration: underline;
-    }
+/* 閃爍動畫 */
+@keyframes blink {
+  0%, 100% {
+    opacity: 0; /* 完全透明 */
   }
-
-    /* 桌機，中等寬度，寬度大於等於 992px 且小於 1200px */
-  @media screen and (min-width: 992px) and (max-width: 1199px) {
-    .background {
-      width: 100vw; /* 占滿視窗寬度 */
-      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-    .click-circle {
-      top: 73%;
-      width: 50vw; /* 手機上圈圈稍微縮小 */
-    }
-
-    .image-container {
-      position: fixed;
-      height: auto;
-      width: 45vh; /* 動態寬度 */
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      top: var(--image-top, 8%);
-      transition: all 0.3s ease-in-out; /* 保留平滑過渡 */
-    }
-
-    .animated-text {
-      position: absolute;
-      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
-      font-size: 16px;
-      font-weight: bold;
-      color: #fff;
-      opacity: 0;
-      animation: fadeInUp 1s forwards;
-      text-decoration: underline;
-    }
+  50% {
+    opacity: 1; /* 完全可見 */
   }
-
-  @media screen and (min-width: 768px) and (max-width: 991px) {
-    .background {
-      width: 100vw; /* 占滿視窗寬度 */
-      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-    .click-circle {
-      top: 73%;
-      width: 50vw; /* 手機上圈圈稍微縮小 */
-    }
-
-    .image-container {
-      position: fixed;
-      height: auto;
-      width: 45vh; /* 動態寬度 */
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      top: var(--image-top, 8%);
-      transition: all 0.3s ease-in-out; /* 保留平滑過渡 */
-    }
-
-    .animated-text {
-      position: absolute;
-      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
-      font-size: 16px;
-      font-weight: bold;
-      color: #fff;
-      opacity: 0;
-      animation: fadeInUp 1s forwards;
-      text-decoration: underline;
-    }
+  75% {
+    opacity: 0.5; /* 半透明 */
   }
+}
 
-  @media screen and (max-width: 767px) {
-    .background {
-      width: 100vw; /* 占滿視窗寬度 */
-      background-size: contain; /* 確保背景圖片覆蓋整個區域 */
-    }
-    .click-circle {
-      top: 68%;
-      width: 60vw; /* 手機上圈圈稍微縮小 */
-    }
-    .image-container {
-      position: fixed;
-      height: auto;
-      width: clamp(320px, 27vw, 400px); /* 動態寬度 */
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      top: clamp(15vh, 15%, 20vh);
-      transition: all 0.3s ease-in-out; /* 保留平滑過渡 */
-    }
-  
-    .modal-content {
-      font-size: 14px; /* 調整字體大小 */
-      padding: 15px; /* 減少內距 */
-    }
-    .animated-text {
-      position: absolute;
-      transform: translate(-50%, -50%); /* 使文字以中心點定位 */
-      font-size: 12px;
-      font-weight: bold;
-      color: #fff;
-      opacity: 0;
-      animation: fadeInUp 1s forwards;
-      text-decoration: underline;
-    }
+      .st0, .st1 {
+        fill: #00516d;
+      }
 
-    .click-circle-container {
-      width: 200px;
-      height: 200px;
-      top: 60%; /* 调整为适合小屏幕的定位 */
-    }
-  }
+      .st2 {
+        fill: #2eb6aa;
+      }
 
-  
-  
+      .st3 {
+        fill: #fffef2;
+      }
+
+      .st4 {
+        fill: #daaa3c;
+      }
+
+      .st5 {
+        fill: url(#_未命名漸層_9);
+      }
+
+      .st6 {
+        fill: #446465;
+      }
+
+      .st7 {
+        fill: #fff;
+      }
+
+      .st8 {
+        fill: url(#_未命名漸層_4);
+        mix-blend-mode: multiply;
+        opacity: .35;
+      }
+
+      .st9 {
+        fill: #a2c5e3;
+      }
+
+      .st10, .st11, .st12, .st13 {
+        fill: none;
+      }
+
+      .st14 {
+        fill: #2ea78c;
+      }
+
+      .st15 {
+        fill: #f0c462;
+      }
+
+      .st16 {
+        clip-path: url(#clippath-1);
+      }
+
+      .st11 {
+        stroke: #ffe55f;
+        stroke-width: 2px;
+      }
+
+      .st11, .st1 {
+        stroke-miterlimit: 10;
+      }
+
+      .st12 {
+        stroke-width: 3.66px;
+      }
+
+      .st12, .st13 {
+        stroke: #00516d;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .st17 {
+        fill: #f7dd7e;
+      }
+
+      .st18 {
+        isolation: isolate;
+      }
+
+      .st19 {
+        fill: #865331;
+      }
+
+      .st20 {
+        fill: #f9f4c3;
+      }
+
+      .st21 {
+        fill: #006478;
+      }
+
+      .st1 {
+        stroke: #fff;
+        stroke-width: 2.16px;
+      }
+
+      .st13 {
+        stroke-width: 2.63px;
+      }
+
+      .st22 {
+        fill: #e9d1b4;
+      }
+
+      .st23 {
+        fill: #ffe55f;
+      }
+
+      .st24 {
+        clip-path: url(#clippath);
+      }
+
+      .st25 {
+        opacity: 0;
+      }

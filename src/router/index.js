@@ -71,8 +71,8 @@ const routes = [
   },
 
   {
-    path: '/SpiritualPage',
-    name: 'SpiritualPage',
+    path: '/ShenShiTemple',
+    name: 'ShenShiTemple',
     component: SpiritualPage,
     props: true,
     meta: {
@@ -96,8 +96,8 @@ const routes = [
     component: NotFoundPage,
   },
   {
-    path: '/ShenShiTemple',
-    name: 'ShenShiTemple',
+    path: '/SpiritualPage',
+    name: 'SpiritualPage',
     component: ShenShihGong,
     meta: {
       title: '深情石刻',
